@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossário Business</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+:root {
+  --bg:#02040a;
+  --surface:#070b16;
+  --card:#0a1020;
+  --card-h:#10182c;
+  --border:#1d2c50;
+  --border-h:#35518c;
+  --teal:#00ff9d;
+  --amber:#f59e0b;
+  --blue:#818cf8;
+  --violet:#c084fc;
+  --rose:#ff4d6d;
+  --sky:#38bdf8;
+  --orange:#fb923c;
+  --pink:#e040fb;
+  --text:#edf4ff;
+  --text-sec:#a9b7cf;
+  --text-dim:#64748b;
+  --white:#fff;
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 85% 55% at 0% -8%, rgba(0,255,157,.18) 0%, rgba(0,255,157,.07) 28%, transparent 62%),
+    radial-gradient(ellipse 75% 48% at 105% 105%, rgba(192,132,252,.20) 0%, rgba(224,64,251,.10) 35%, transparent 65%),
+    radial-gradient(ellipse 45% 35% at 52% 48%, rgba(224,64,251,.09) 0%, transparent 62%);
+  pointer-events:none;
+  z-index:0;
+}
+
+header, .search-wrap, .filters-wrap, .info-bar, .grid, .empty, footer {
+  max-width:1180px;
+  margin:0 auto;
+  position:relative;
+  z-index:10;
+}
+
+header { padding:64px 40px 44px; }
+
+.eyebrow {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(0,255,157,.10);
+  border:1px solid rgba(0,255,157,.35);
+  border-radius:20px;
+  padding:5px 14px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:24px;
+  box-shadow:0 0 28px rgba(0,255,157,.16);
+}
+
+.eyebrow span {
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 10px var(--teal),0 0 28px rgba(0,255,157,.60);
+}
+
+.title-line {
+  display:flex;
+  align-items:flex-end;
+  gap:22px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(42px,7vw,80px);
+  font-weight:700;
+  line-height:.9;
+  letter-spacing:-.02em;
+  color:var(--white);
+}
+
+h1 em {
+  font-style:italic;
+  font-weight:600;
+  background:linear-gradient(135deg,#00ff9d 0%,#c084fc 55%,#e040fb 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.author-badge {
+  position:relative;
+  top:-10px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid rgba(0,255,157,.32);
+  background:rgba(0,255,157,.08);
+  color:#a9b7cf;
+  border-radius:999px;
+  padding:7px 14px;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:0 0 22px rgba(0,255,157,.12);
+}
+
+.author-badge strong {
+  color:var(--teal);
+  font-weight:800;
+  text-shadow:0 0 14px rgba(0,255,157,.55);
+}
+
+.stats-row {
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin-top:28px;
+  flex-wrap:wrap;
+}
+
+.stat { display:flex; align-items:baseline; gap:6px; }
+
+.stat-num {
+  font-size:22px;
+  font-weight:800;
+  color:var(--teal);
+  text-shadow:0 0 14px rgba(0,255,157,.95),0 0 32px rgba(0,255,157,.55),0 0 54px rgba(0,255,157,.25);
+}
+
+.stat-label { font-size:13px; color:var(--text-dim); }
+.stat-sep { width:1px; height:20px; background:var(--border); }
+
+.search-wrap {
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:linear-gradient(180deg,var(--bg) 78%,transparent 100%);
+  padding:16px 40px 20px;
+}
+
+.search-box { position:relative; display:flex; align-items:center; }
+
+.search-ico {
+  position:absolute;
+  left:18px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--text-dim);
+  width:18px;
+  height:18px;
+  pointer-events:none;
+}
+
+#searchInput {
+  width:100%;
+  background:rgba(7,11,22,.92);
+  border:1.5px solid rgba(53,81,140,.72);
+  border-radius:14px;
+  padding:15px 50px 15px 50px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:15px;
+  color:var(--text);
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+
+#searchInput::placeholder { color:var(--text-dim); }
+
+#searchInput:focus {
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(0,255,157,.14),0 0 26px rgba(0,255,157,.18);
+}
+
+.clear-btn {
+  position:absolute;
+  right:16px;
+  background:var(--border);
+  border:none;
+  border-radius:50%;
+  width:26px;
+  height:26px;
+  color:var(--text-sec);
+  cursor:pointer;
+  font-size:14px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.clear-btn.show { display:flex; }
+
+.cat-radio {
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  opacity:0;
+}
+
+.filters-wrap {
+  padding:0 40px 28px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.f-btn {
+  cursor:pointer;
+  border:1.5px solid var(--border);
+  background:transparent;
+  border-radius:10px;
+  padding:7px 16px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text-sec);
+  transition:all .18s;
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.f-btn:hover { border-color:var(--border-h); color:var(--text); }
+
+#cat-all:checked ~ .filters-wrap label[for='cat-all'],
+#cat-1:checked ~ .filters-wrap label[for='cat-1'],
+#cat-2:checked ~ .filters-wrap label[for='cat-2'],
+#cat-3:checked ~ .filters-wrap label[for='cat-3'],
+#cat-4:checked ~ .filters-wrap label[for='cat-4'],
+#cat-5:checked ~ .filters-wrap label[for='cat-5'],
+#cat-6:checked ~ .filters-wrap label[for='cat-6'],
+#cat-7:checked ~ .filters-wrap label[for='cat-7'],
+#cat-8:checked ~ .filters-wrap label[for='cat-8'],
+#cat-9:checked ~ .filters-wrap label[for='cat-9'] {
+  background:var(--teal) !important;
+  border-color:var(--teal) !important;
+  color:#001a0e !important;
+  font-weight:800 !important;
+  box-shadow:0 0 18px rgba(0,255,157,.72),0 0 42px rgba(0,255,157,.30),0 8px 24px rgba(0,255,157,.22) !important;
+}
+
+#cat-1:checked ~ .grid .cat-section:not(.section-c1) { display:none; }
+#cat-2:checked ~ .grid .cat-section:not(.section-c2) { display:none; }
+#cat-3:checked ~ .grid .cat-section:not(.section-c3) { display:none; }
+#cat-4:checked ~ .grid .cat-section:not(.section-c4) { display:none; }
+#cat-5:checked ~ .grid .cat-section:not(.section-c5) { display:none; }
+#cat-6:checked ~ .grid .cat-section:not(.section-c6) { display:none; }
+#cat-7:checked ~ .grid .cat-section:not(.section-c7) { display:none; }
+#cat-8:checked ~ .grid .cat-section:not(.section-c8) { display:none; }
+#cat-9:checked ~ .grid .cat-section:not(.section-c9) { display:none; }
+
+.info-bar {
+  padding:0 40px 20px;
+  font-size:13px;
+  color:var(--text-dim);
+  min-height:24px;
+}
+
+.info-bar b { color:var(--teal); font-weight:600; }
+
+.grid { padding:0 40px 80px; }
+
+.cat-section { margin-bottom:12px; }
+
+.cat-section.search-empty { display:none !important; }
+
+.card.search-hidden { display:none !important; }
+
+.cat-heading {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:28px 0 14px;
+}
+
+.cat-dot {
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.cat-title {
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--text-sec);
+}
+
+.cat-count {
+  font-size:11px;
+  color:var(--text-dim);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:2px 10px;
+  font-weight:500;
+}
+
+.cat-rule { flex:1; height:1px; background:var(--border); }
+
+.cards-row {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.card {
+  background:linear-gradient(180deg,rgba(16,24,44,.82),rgba(10,16,32,.96));
+  border:1.5px solid rgba(53,81,140,.62);
+  border-radius:14px;
+  padding:20px 22px;
+  transition:border-color .2s, background .2s, transform .18s, box-shadow .2s;
+  animation:pop .3s ease both;
+  position:relative;
+}
+
+.card:hover {
+  background:linear-gradient(180deg,rgba(20,30,54,.96),rgba(12,18,36,.98));
+  transform:translateY(-2px);
+}
+
+.term {
+  font-size:15px;
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:9px;
+  line-height:1.3;
+}
+
+.term-main { color:#fff; font-weight:800; }
+
+.term-slash {
+  color:var(--teal);
+  margin:0 5px;
+  text-shadow:0 0 12px rgba(0,255,157,.55);
+}
+
+.term-pt {
+  color:var(--violet);
+  font-weight:800;
+}
+
+.def {
+  font-size:14px;
+  font-weight:600;
+  color:#c8d4e8;
+  line-height:1.65;
+}
+
+.empty {
+  display:none;
+  padding:40px;
+  color:var(--text-dim);
+  text-align:center;
+}
+
+.empty.show { display:block; }
+
+.empty b { color:var(--teal); }
+
+.c1 .cat-dot { background:var(--violet); box-shadow:0 0 10px var(--violet),0 0 26px rgba(192,132,252,.55); }
+.c2 .cat-dot,.c6 .cat-dot { background:var(--teal); box-shadow:0 0 10px var(--teal),0 0 28px rgba(0,255,157,.60); }
+.c3 .cat-dot { background:var(--amber); }
+.c4 .cat-dot { background:var(--rose); }
+.c5 .cat-dot { background:var(--blue); }
+.c7 .cat-dot { background:var(--orange); }
+.c8 .cat-dot { background:var(--pink); box-shadow:0 0 10px var(--pink),0 0 26px rgba(224,64,251,.55); }
+.c9 .cat-dot { background:var(--sky); }
+
+.c1 .cat-rule { background:linear-gradient(90deg,rgba(192,132,252,.35),transparent); }
+.c2 .cat-rule,.c6 .cat-rule { background:linear-gradient(90deg,rgba(0,255,157,.3),transparent); }
+.c3 .cat-rule { background:linear-gradient(90deg,rgba(245,158,11,.3),transparent); }
+.c4 .cat-rule { background:linear-gradient(90deg,rgba(255,77,109,.3),transparent); }
+.c5 .cat-rule { background:linear-gradient(90deg,rgba(129,140,248,.3),transparent); }
+.c7 .cat-rule { background:linear-gradient(90deg,rgba(251,146,60,.3),transparent); }
+.c8 .cat-rule { background:linear-gradient(90deg,rgba(224,64,251,.3),transparent); }
+.c9 .cat-rule { background:linear-gradient(90deg,rgba(56,189,248,.3),transparent); }
+
+.c1.card:hover { border-color:rgba(192,132,252,.62); box-shadow:0 8px 30px rgba(192,132,252,.18); }
+.c2.card:hover,.c6.card:hover { border-color:rgba(0,255,157,.58); box-shadow:0 8px 30px rgba(0,255,157,.16); }
+.c3.card:hover { border-color:rgba(245,158,11,.55); box-shadow:0 8px 30px rgba(245,158,11,.14); }
+.c4.card:hover { border-color:rgba(255,77,109,.55); box-shadow:0 8px 30px rgba(255,77,109,.14); }
+.c5.card:hover { border-color:rgba(129,140,248,.58); box-shadow:0 8px 30px rgba(129,140,248,.15); }
+.c7.card:hover { border-color:rgba(251,146,60,.55); box-shadow:0 8px 30px rgba(251,146,60,.14); }
+.c8.card:hover { border-color:rgba(224,64,251,.62); box-shadow:0 8px 30px rgba(224,64,251,.18); }
+.c9.card:hover { border-color:rgba(56,189,248,.55); box-shadow:0 8px 30px rgba(56,189,248,.14); }
+
+footer {
+  border-top:1px solid var(--border);
+  padding:20px 40px;
+  font-size:12px;
+  color:var(--text-dim);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+@keyframes pop {
+  from { opacity:0; transform:translateY(8px) scale(.99); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+
+@media (min-width:900px) and (max-width:1179px) {
+  header,.search-wrap,.filters-wrap,.info-bar,.grid,.empty,footer { max-width:1040px; padding-left:34px; padding-right:34px; }
+  .cards-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+@media (min-width:641px) and (max-width:899px) {
+  header,.search-wrap,.filters-wrap,.info-bar,.grid,.empty,footer { max-width:820px; padding-left:32px; padding-right:32px; }
+  header { padding-top:52px; padding-bottom:36px; }
+  h1 { font-size:clamp(54px,8vw,68px); }
+  .cards-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #searchInput { min-height:58px; font-size:16px; border-radius:16px; }
+}
+
+@media (max-width:760px) {
+  .cards-row { grid-template-columns:1fr; }
+}
+
+@media (max-width:640px) {
+  body { font-size:14px; }
+  header { padding:36px 18px 26px; }
+  header,.search-wrap,.filters-wrap,.info-bar,.grid,.empty,footer { padding-left:18px; padding-right:18px; }
+  .title-line { display:block; margin-bottom:16px; }
+  h1 { font-size:clamp(42px,13vw,56px); line-height:.92; }
+  .author-badge { top:0; margin-top:12px; font-size:12px; padding:6px 12px; }
+  .stats-row { gap:12px; margin-top:22px; }
+  .stat-num { font-size:24px; }
+  .stat-label { font-size:12px; }
+
+  .search-wrap {
+    position:relative;
+    top:auto;
+    padding-top:10px;
+    padding-bottom:14px;
+    background:var(--bg);
+  }
+
+  #searchInput {
+    min-height:54px;
+    border-radius:15px;
+    font-size:15px;
+    padding-left:46px;
+    padding-right:44px;
+  }
+
+  .filters-wrap {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    overflow:visible;
+    padding-bottom:18px;
+  }
+
+  .f-btn {
+    width:auto;
+    min-width:0;
+    flex:0 0 auto;
+    padding:8px 12px;
+    font-size:12px;
+    text-align:center;
+    white-space:nowrap;
+    border-radius:11px;
+    min-height:42px;
+  }
+
+  .cat-heading { gap:10px; padding:22px 0 12px; }
+  .cat-title { font-size:10px; letter-spacing:.10em; }
+  .cat-count { font-size:10px; padding:2px 8px; }
+  .card { padding:17px 18px; border-radius:15px; }
+  .term { font-size:14px; line-height:1.38; }
+  .def { font-size:13px; line-height:1.58; }
+  footer { display:block; line-height:1.8; padding-top:16px; padding-bottom:18px; }
+}
+
+@media (max-width:390px) {
+  h1 { font-size:40px; }
+  .f-btn { font-size:11px; padding-left:10px; padding-right:10px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="eyebrow"><span></span>Dicionário Executivo</div>
+  <div class="title-line">
+    <h1>Glossário<br><em>Business</em></h1>
+    <div class="author-badge">por <strong>Renato Neves</strong></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num">200</span><span class="stat-label">termos</span></div>
+    <div class="stat-sep"></div>
+    <div class="stat"><span class="stat-num">9</span><span class="stat-label">categorias</span></div>
+    <div class="stat-sep"></div>
+    <div class="stat"><span class="stat-num" id="visCount">200</span><span class="stat-label">visíveis</span></div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Buscar em português, inglês ou significado..." autocomplete="off" spellcheck="false" oninput="GB_applySearch()" onkeyup="GB_applySearch()">
+    <button type="button" class="clear-btn" id="clearBtn" onclick="GB_clearSearch()">✕</button>
+  </div>
+</div>
+
+<input class="cat-radio" type="radio" name="catFilter" id="cat-all" value="0" checked onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-1" value="1" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-2" value="2" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-3" value="3" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-4" value="4" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-5" value="5" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-6" value="6" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-7" value="7" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-8" value="8" onchange="GB_applySearch()"><input class="cat-radio" type="radio" name="catFilter" id="cat-9" value="9" onchange="GB_applySearch()">
+
+<nav class="filters-wrap" id="filtersWrap">
+  <label class="f-btn" for="cat-all" data-id="0">Todos</label><label class="f-btn" for="cat-1" data-id="1">Estratégia</label><label class="f-btn" for="cat-2" data-id="2">Comunicação</label><label class="f-btn" for="cat-3" data-id="3">Marketing</label><label class="f-btn" for="cat-4" data-id="4">Pessoas</label><label class="f-btn" for="cat-5" data-id="5">Projetos</label><label class="f-btn" for="cat-6" data-id="6">Dados / IA</label><label class="f-btn" for="cat-7" data-id="7">Finanças</label><label class="f-btn" for="cat-8" data-id="8">Consultoria</label><label class="f-btn" for="cat-9" data-id="9">Operação</label>
+</nav>
+
+<div class="info-bar" id="infoBar"></div>
+
+<main class="grid" id="grid">
+  
+    <section class="cat-section section-c1" data-section-cat="1">
+      <div class="cat-heading">
+        <div class="cat-dot c1"></div>
+        <span class="cat-title">Estratégia e Gestão</span>
+        <span class="cat-count">29</span>
+        <div class="cat-rule c1"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c1" data-cat="1" data-search="premissas assumption premissa assumida como verdadeira para basear uma decisao analise ou planejamento">
+          <div class="term"><span class="term-main">Assumption</span><span class="term-slash">/</span><span class="term-pt">Premissas</span></div>
+          <div class="def">Premissa assumida como verdadeira para basear uma decisão, análise ou planejamento.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="comparacao de mercado benchmarking processo de comparar praticas indicadores ou resultados com referencias do mercado para encontrar pontos de melhoria">
+          <div class="term"><span class="term-main">Benchmarking</span><span class="term-slash">/</span><span class="term-pt">Comparação de mercado</span></div>
+          <div class="def">Processo de comparar práticas, indicadores ou resultados com referências do mercado para encontrar pontos de melhoria.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="caso de negocio business case documento ou argumento que justifica economicamente a aprovacao de um projeto investimento ou mudanca estrategica">
+          <div class="term"><span class="term-main">Business Case</span><span class="term-slash">/</span><span class="term-pt">Caso de negócio</span></div>
+          <div class="def">Documento ou argumento que justifica economicamente a aprovação de um projeto, investimento ou mudança estratégica.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="restricao constraint restricao ou limitacao de tempo orcamento recursos ou regras que precisa ser considerada ao tomar uma decisao">
+          <div class="term"><span class="term-main">Constraint</span><span class="term-slash">/</span><span class="term-pt">Restrição</span></div>
+          <div class="def">Restrição ou limitação — de tempo, orçamento, recursos ou regras — que precisa ser considerada ao tomar uma decisão.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="negocio principal core business atividade central da empresa aquilo que ela faz de melhor e que representa seu principal negocio">
+          <div class="term"><span class="term-main">Core Business</span><span class="term-slash">/</span><span class="term-pt">Negócio principal</span></div>
+          <div class="def">Atividade central da empresa, aquilo que ela faz de melhor e que representa seu principal negócio.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="estrutura de decisao decision framework conjunto de criterios ou etapas estruturadas para tomar decisoes de forma mais objetiva e consistente">
+          <div class="term"><span class="term-main">Decision Framework</span><span class="term-slash">/</span><span class="term-pt">Estrutura de decisão</span></div>
+          <div class="def">Conjunto de critérios ou etapas estruturadas para tomar decisões de forma mais objetiva e consistente.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="disruptivo disruptivo diz se de algo que rompe o padrao existente e muda a forma tradicional de um setor operar ou competir">
+          <div class="term"><span class="term-main">Disruptivo</span></div>
+          <div class="def">Diz-se de algo que rompe o padrão existente e muda a forma tradicional de um setor operar ou competir.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="lacuna gap lacuna entre a situacao atual e a situacao desejada pode ser de resultado processo competencia ou mercado">
+          <div class="term"><span class="term-main">Gap</span><span class="term-slash">/</span><span class="term-pt">Lacuna</span></div>
+          <div class="def">Lacuna entre a situação atual e a situação desejada — pode ser de resultado, processo, competência ou mercado.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="indicador chave de desempenho kpi key performance indicator indicador chave de desempenho usado para medir se uma meta operacao ou estrategia esta no caminho certo">
+          <div class="term"><span class="term-main">KPI (Key Performance Indicator)</span><span class="term-slash">/</span><span class="term-pt">Indicador-chave de desempenho</span></div>
+          <div class="def">Indicador-chave de desempenho usado para medir se uma meta, operação ou estratégia está no caminho certo.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="ganho facil low hanging fruit oportunidade facil e rapida de capturar com pouco esforco e resultado imediato">
+          <div class="term"><span class="term-main">Low-hanging fruit</span><span class="term-slash">/</span><span class="term-pt">Ganho fácil</span></div>
+          <div class="def">Oportunidade fácil e rápida de capturar, com pouco esforço e resultado imediato.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="mentalidade mindset forma de pensar e encarar situacoes influencia como decisoes sao tomadas e como desafios sao abordados">
+          <div class="term"><span class="term-main">Mindset</span><span class="term-slash">/</span><span class="term-pt">Mentalidade</span></div>
+          <div class="def">Forma de pensar e encarar situações — influencia como decisões são tomadas e como desafios são abordados.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="vantagem competitiva defensavel moat vantagem competitiva solida e dificil de copiar que protege o negocio da concorrencia no longo prazo">
+          <div class="term"><span class="term-main">Moat</span><span class="term-slash">/</span><span class="term-pt">Vantagem competitiva defensável</span></div>
+          <div class="def">Vantagem competitiva sólida e difícil de copiar, que protege o negócio da concorrência no longo prazo.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="indispensavel must have requisito indispensavel sem ele o projeto produto ou negociacao nao funciona">
+          <div class="term"><span class="term-main">Must Have</span><span class="term-slash">/</span><span class="term-pt">Indispensável</span></div>
+          <div class="def">Requisito indispensável. Sem ele, o projeto, produto ou negociação não funciona.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="produto minimo viavel mvp minimum viable product versao minima de um produto com o suficiente para testar uma ideia e validar se existe demanda real">
+          <div class="term"><span class="term-main">MVP (Minimum Viable Product)</span><span class="term-slash">/</span><span class="term-pt">Produto mínimo viável</span></div>
+          <div class="def">Versão mínima de um produto com o suficiente para testar uma ideia e validar se existe demanda real.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="desejavel nice to have item desejavel mas nao essencial pode ser incluido se houver tempo e recursos disponiveis">
+          <div class="term"><span class="term-main">Nice to Have</span><span class="term-slash">/</span><span class="term-pt">Desejável</span></div>
+          <div class="def">Item desejável, mas não essencial. Pode ser incluído se houver tempo e recursos disponíveis.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="metrica norteadora north star metric a metrica principal que melhor representa o crescimento e o sucesso do negocio a longo prazo">
+          <div class="term"><span class="term-main">North Star Metric</span><span class="term-slash">/</span><span class="term-pt">Métrica norteadora</span></div>
+          <div class="def">A métrica principal que melhor representa o crescimento e o sucesso do negócio a longo prazo.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="objetivos e resultados chave okr objectives and key results metodologia de metas composta por um objetivo qualitativo e resultados chave mensuraveis que mostram o progresso">
+          <div class="term"><span class="term-main">OKR (Objectives and Key Results)</span><span class="term-slash">/</span><span class="term-pt">Objetivos e resultados-chave</span></div>
+          <div class="def">Metodologia de metas composta por um objetivo qualitativo e resultados-chave mensuráveis que mostram o progresso.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="mudar a direcao pivotar mudar a direcao de uma estrategia produto ou modelo de negocio com base em novos dados ou aprendizados">
+          <div class="term"><span class="term-main">Pivotar</span><span class="term-slash">/</span><span class="term-pt">Mudar a direção</span></div>
+          <div class="def">Mudar a direção de uma estratégia, produto ou modelo de negócio com base em novos dados ou aprendizados.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="ator do mercado player empresa pessoa ou entidade relevante dentro de um determinado mercado ou setor">
+          <div class="term"><span class="term-main">Player</span><span class="term-slash">/</span><span class="term-pt">Ator do mercado</span></div>
+          <div class="def">Empresa, pessoa ou entidade relevante dentro de um determinado mercado ou setor.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="ganho rapido quick win ganho rapido obtido com pouco esforco que gera resultado positivo e cria momentum na equipe ou projeto">
+          <div class="term"><span class="term-main">Quick Win</span><span class="term-slash">/</span><span class="term-pt">Ganho rápido</span></div>
+          <div class="def">Ganho rápido obtido com pouco esforço, que gera resultado positivo e cria momentum na equipe ou projeto.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="causa raiz root cause causa raiz de um problema a origem real do desvio e nao apenas o sintoma visivel">
+          <div class="term"><span class="term-main">Root Cause</span><span class="term-slash">/</span><span class="term-pt">Causa-raiz</span></div>
+          <div class="def">Causa-raiz de um problema — a origem real do desvio, e não apenas o sintoma visível.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="escalar scaling escalar crescer a operacao com eficiencia sem aumentar custos na mesma proporcao do crescimento">
+          <div class="term"><span class="term-main">Scaling / Escalar</span><span class="term-slash">/</span><span class="term-pt">Escalar</span></div>
+          <div class="def">Crescer a operação com eficiência, sem aumentar custos na mesma proporção do crescimento.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="partes interessadas stakeholders todas as partes que tem interesse ou sao impactadas por uma decisao projeto ou empresa">
+          <div class="term"><span class="term-main">Stakeholders</span><span class="term-slash">/</span><span class="term-pt">Partes interessadas</span></div>
+          <div class="def">Todas as partes que têm interesse ou são impactadas por uma decisão, projeto ou empresa.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="empresa nascente startup empresa jovem com modelo de negocio inovador e potencial de crescimento rapido e escalavel">
+          <div class="term"><span class="term-main">Startup</span><span class="term-slash">/</span><span class="term-pt">Empresa nascente</span></div>
+          <div class="def">Empresa jovem com modelo de negócio inovador e potencial de crescimento rápido e escalável.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="alvo target alvo definido pode ser um objetivo de resultado um publico especifico ou uma meta a atingir">
+          <div class="term"><span class="term-main">Target</span><span class="term-slash">/</span><span class="term-pt">Alvo</span></div>
+          <div class="def">Alvo definido — pode ser um objetivo de resultado, um público específico ou uma meta a atingir.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="pensar fora da caixa think outside the box pensar de forma criativa e nao convencional buscando solucoes alem do obvio">
+          <div class="term"><span class="term-main">Think outside the box</span><span class="term-slash">/</span><span class="term-pt">Pensar fora da caixa</span></div>
+          <div class="def">Pensar de forma criativa e não convencional, buscando soluções além do óbvio.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="escolha com renuncia trade off escolha em que se ganha algo mas necessariamente se abre mao de outra coisa">
+          <div class="term"><span class="term-main">Trade-off</span><span class="term-slash">/</span><span class="term-pt">Escolha com renúncia</span></div>
+          <div class="def">Escolha em que se ganha algo, mas necessariamente se abre mão de outra coisa.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="tendencia trend tendencia de comportamento mercado ou tecnologia que sinaliza uma mudanca em curso">
+          <div class="term"><span class="term-main">Trend</span><span class="term-slash">/</span><span class="term-pt">Tendência</span></div>
+          <div class="def">Tendência de comportamento, mercado ou tecnologia que sinaliza uma mudança em curso.</div>
+        </article>
+        
+        <article class="card c1" data-cat="1" data-search="caso de uso use case caso pratico e concreto de como uma solucao produto ou servico e usado na realidade">
+          <div class="term"><span class="term-main">Use Case</span><span class="term-slash">/</span><span class="term-pt">Caso de uso</span></div>
+          <div class="def">Caso prático e concreto de como uma solução, produto ou serviço é usado na realidade.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c2" data-section-cat="2">
+      <div class="cat-heading">
+        <div class="cat-dot c2"></div>
+        <span class="cat-title">Comunicação e Reuniões</span>
+        <span class="cat-count">24</span>
+        <div class="cat-rule c2"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c2" data-cat="2" data-search="itens de acao action items tarefas definidas ao final de uma reuniao com responsavel e prazo claros para cada uma">
+          <div class="term"><span class="term-main">Action Items</span><span class="term-slash">/</span><span class="term-pt">Itens de ação</span></div>
+          <div class="def">Tarefas definidas ao final de uma reunião, com responsável e prazo claros para cada uma.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="alinhamento alinhamento conversa ou reuniao para garantir que todos tem o mesmo entendimento sobre um assunto decisao ou direcao">
+          <div class="term"><span class="term-main">Alinhamento</span></div>
+          <div class="def">Conversa ou reunião para garantir que todos têm o mesmo entendimento sobre um assunto, decisão ou direção.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="alinhamento alignment mesmo que alinhamento usado em ingles para indicar sincronia entre pessoas areas ou estrategias">
+          <div class="term"><span class="term-main">Alignment</span><span class="term-slash">/</span><span class="term-pt">Alinhamento</span></div>
+          <div class="def">Mesmo que Alinhamento — usado em inglês para indicar sincronia entre pessoas, áreas ou estratégias.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="o mais rapido possivel asap as soon as possible o mais rapido possivel usado para indicar urgencia em uma entrega ou resposta">
+          <div class="term"><span class="term-main">ASAP (As Soon As Possible)</span><span class="term-slash">/</span><span class="term-pt">O mais rápido possível</span></div>
+          <div class="def">O mais rápido possível. Usado para indicar urgência em uma entrega ou resposta.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="tempestade de ideias brainstorming dinamica em grupo para gerar ideias solucoes ou alternativas de forma livre sem julgamento inicial">
+          <div class="term"><span class="term-main">Brainstorming</span><span class="term-slash">/</span><span class="term-pt">Tempestade de ideias</span></div>
+          <div class="def">Dinâmica em grupo para gerar ideias, soluções ou alternativas de forma livre, sem julgamento inicial.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="orientacoes iniciais briefing documento ou conversa inicial que reune informacoes objetivos e orientacoes para executar uma tarefa ou projeto">
+          <div class="term"><span class="term-main">Briefing</span><span class="term-slash">/</span><span class="term-pt">Orientações iniciais</span></div>
+          <div class="def">Documento ou conversa inicial que reúne informações, objetivos e orientações para executar uma tarefa ou projeto.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="reuniao chamada call reuniao por telefone audio ou videoconferencia">
+          <div class="term"><span class="term-main">Call</span><span class="term-slash">/</span><span class="term-pt">Reunião/chamada</span></div>
+          <div class="def">Reunião por telefone, áudio ou videoconferência.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="reuniao diaria daily reuniao diaria curta geralmente 15 minutos para alinhar o que foi feito o que sera feito e o que esta travado">
+          <div class="term"><span class="term-main">Daily</span><span class="term-slash">/</span><span class="term-pt">Reunião diária</span></div>
+          <div class="def">Reunião diária curta — geralmente 15 minutos — para alinhar o que foi feito, o que será feito e o que está travado.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="analise pos acao debriefing analise feita apos uma reuniao projeto ou evento para identificar aprendizados e pontos de melhoria">
+          <div class="term"><span class="term-main">Debriefing</span><span class="term-slash">/</span><span class="term-pt">Análise pós-ação</span></div>
+          <div class="def">Análise feita após uma reunião, projeto ou evento para identificar aprendizados e pontos de melhoria.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="analise profunda deep dive mergulho profundo em um tema problema ou indicador para entende lo em todos os detalhes">
+          <div class="term"><span class="term-main">Deep Dive</span><span class="term-slash">/</span><span class="term-pt">Análise profunda</span></div>
+          <div class="def">Mergulho profundo em um tema, problema ou indicador para entendê-lo em todos os detalhes.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="retorno feedback retorno sobre desempenho comportamento ou resultado dado para ajudar alguem a melhorar ou seguir no caminho certo">
+          <div class="term"><span class="term-main">Feedback</span><span class="term-slash">/</span><span class="term-pt">Retorno</span></div>
+          <div class="def">Retorno sobre desempenho, comportamento ou resultado — dado para ajudar alguém a melhorar ou seguir no caminho certo.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="orientacao futura feedforward orientacao focada em melhorias futuras em vez de apenas analisar erros do passado">
+          <div class="term"><span class="term-main">Feedforward</span><span class="term-slash">/</span><span class="term-pt">Orientação futura</span></div>
+          <div class="def">Orientação focada em melhorias futuras, em vez de apenas analisar erros do passado.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="acompanhamento follow up acompanhamento de uma demanda proposta ou pendencia para garantir que avancou ou foi resolvida">
+          <div class="term"><span class="term-main">Follow-up</span><span class="term-slash">/</span><span class="term-pt">Acompanhamento</span></div>
+          <div class="def">Acompanhamento de uma demanda, proposta ou pendência para garantir que avançou ou foi resolvida.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="para sua informacao fyi for your information usado para compartilhar uma informacao relevante sem exigir acao de quem recebe">
+          <div class="term"><span class="term-main">FYI (For Your Information)</span><span class="term-slash">/</span><span class="term-pt">Para sua informação</span></div>
+          <div class="def">Usado para compartilhar uma informação relevante sem exigir ação de quem recebe.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="quebra gelo icebreaker atividade ou pergunta usada no inicio de uma reuniao para descontrair e criar um ambiente mais aberto">
+          <div class="term"><span class="term-main">Icebreaker</span><span class="term-slash">/</span><span class="term-pt">Quebra-gelo</span></div>
+          <div class="def">Atividade ou pergunta usada no início de uma reunião para descontrair e criar um ambiente mais aberto.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="reuniao de inicio kick off reuniao de abertura de um projeto ou contrato para alinhar objetivos responsaveis e proximos passos">
+          <div class="term"><span class="term-main">Kick-off</span><span class="term-slash">/</span><span class="term-pt">Reunião de início</span></div>
+          <div class="def">Reunião de abertura de um projeto ou contrato para alinhar objetivos, responsáveis e próximos passos.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="na mesma pagina na mesma pagina expressao que indica que todos estao alinhados com o mesmo entendimento sobre um assunto">
+          <div class="term"><span class="term-main">Na mesma página</span></div>
+          <div class="def">Expressão que indica que todos estão alinhados com o mesmo entendimento sobre um assunto.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="proximos passos next steps proximos passos acordados apos uma reuniao analise ou decisao">
+          <div class="term"><span class="term-main">Next Steps</span><span class="term-slash">/</span><span class="term-pt">Próximos passos</span></div>
+          <div class="def">Próximos passos acordados após uma reunião, análise ou decisão.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="reuniao individual one on one 1 1 reuniao individual entre duas pessoas geralmente lider e liderado para alinhar dar feedback e desenvolver">
+          <div class="term"><span class="term-main">One-on-one / 1:1</span><span class="term-slash">/</span><span class="term-pt">Reunião individual</span></div>
+          <div class="def">Reunião individual entre duas pessoas — geralmente líder e liderado — para alinhar, dar feedback e desenvolver.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="apresentacao rapida pitch apresentacao curta e objetiva de uma ideia projeto ou proposta feita para convencer ou despertar interesse">
+          <div class="term"><span class="term-main">Pitch</span><span class="term-slash">/</span><span class="term-pt">Apresentação rápida</span></div>
+          <div class="def">Apresentação curta e objetiva de uma ideia, projeto ou proposta, feita para convencer ou despertar interesse.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="conexao confianca rapport conexao confianca e sintonia criadas numa conversa ou negociacao facilita a comunicacao e o acordo">
+          <div class="term"><span class="term-main">Rapport</span><span class="term-slash">/</span><span class="term-pt">Conexão/confiança</span></div>
+          <div class="def">Conexão, confiança e sintonia criadas numa conversa ou negociação — facilita a comunicação e o acordo.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="contato rapido touch base contato rapido para verificar o andamento de algo atualizar ou manter o alinhamento">
+          <div class="term"><span class="term-main">Touch base</span><span class="term-slash">/</span><span class="term-pt">Contato rápido</span></div>
+          <div class="def">Contato rápido para verificar o andamento de algo, atualizar ou manter o alinhamento.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="reuniao geral town hall reuniao ampla com toda a empresa ou area para comunicar decisoes resultados ou direcionamentos estrategicos">
+          <div class="term"><span class="term-main">Town Hall</span><span class="term-slash">/</span><span class="term-pt">Reunião geral</span></div>
+          <div class="def">Reunião ampla com toda a empresa ou área para comunicar decisões, resultados ou direcionamentos estratégicos.</div>
+        </article>
+        
+        <article class="card c2" data-cat="2" data-search="fechamento wrap up encerramento de uma reuniao projeto ou etapa com resumo das decisoes e proximos passos">
+          <div class="term"><span class="term-main">Wrap-up</span><span class="term-slash">/</span><span class="term-pt">Fechamento</span></div>
+          <div class="def">Encerramento de uma reunião, projeto ou etapa, com resumo das decisões e próximos passos.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c3" data-section-cat="3">
+      <div class="cat-heading">
+        <div class="cat-dot c3"></div>
+        <span class="cat-title">Marketing, Vendas e Cliente</span>
+        <span class="cat-count">40</span>
+        <div class="cat-rule c3"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c3" data-cat="3" data-search="receita media por usuario arpu average revenue per user receita media gerada por cada usuario ou cliente em um determinado periodo">
+          <div class="term"><span class="term-main">ARPU (Average Revenue Per User)</span><span class="term-slash">/</span><span class="term-pt">Receita média por usuário</span></div>
+          <div class="def">Receita média gerada por cada usuário ou cliente em um determinado período.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="reconhecimento de marca awareness nivel de reconhecimento de uma marca pelo publico quanto as pessoas conhecem e lembram da empresa">
+          <div class="term"><span class="term-main">Awareness</span><span class="term-slash">/</span><span class="term-pt">Reconhecimento de marca</span></div>
+          <div class="def">Nível de reconhecimento de uma marca pelo público — quanto as pessoas conhecem e lembram da empresa.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="empresa para empresa b2b business to business modelo de negocio em que a empresa vende para outra empresa nao para o consumidor final">
+          <div class="term"><span class="term-main">B2B (Business to Business)</span><span class="term-slash">/</span><span class="term-pt">Empresa para empresa</span></div>
+          <div class="def">Modelo de negócio em que a empresa vende para outra empresa, não para o consumidor final.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="empresa para consumidor b2c business to consumer modelo de negocio em que a empresa vende diretamente para o consumidor final">
+          <div class="term"><span class="term-main">B2C (Business to Consumer)</span><span class="term-slash">/</span><span class="term-pt">Empresa para consumidor</span></div>
+          <div class="def">Modelo de negócio em que a empresa vende diretamente para o consumidor final.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="gestao de marca branding gestao da identidade imagem e percepcao da marca vai alem do logo e engloba todos os pontos de contato com o publico">
+          <div class="term"><span class="term-main">Branding</span><span class="term-slash">/</span><span class="term-pt">Gestão de marca</span></div>
+          <div class="def">Gestão da identidade, imagem e percepção da marca — vai além do logo e engloba todos os pontos de contato com o público.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="custo de aquisicao de cliente cac customer acquisition cost custo total investido para conquistar um novo cliente incluindo marketing vendas e operacao">
+          <div class="term"><span class="term-main">CAC (Customer Acquisition Cost)</span><span class="term-slash">/</span><span class="term-pt">Custo de aquisição de cliente</span></div>
+          <div class="def">Custo total investido para conquistar um novo cliente, incluindo marketing, vendas e operação.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="taxa de cancelamento churn rate taxa de clientes perdidos ou que cancelaram em um periodo quanto maior pior para o negocio">
+          <div class="term"><span class="term-main">Churn Rate</span><span class="term-slash">/</span><span class="term-pt">Taxa de cancelamento</span></div>
+          <div class="def">Taxa de clientes perdidos ou que cancelaram em um período. Quanto maior, pior para o negócio.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="conversao conversao momento em que o cliente realiza a acao desejada como comprar assinar ou se cadastrar">
+          <div class="term"><span class="term-main">Conversão</span></div>
+          <div class="def">Momento em que o cliente realiza a ação desejada — como comprar, assinar ou se cadastrar.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="texto persuasivo copywriting texto escrito com objetivo de persuadir e levar o leitor a uma acao especifica">
+          <div class="term"><span class="term-main">Copywriting</span><span class="term-slash">/</span><span class="term-pt">Texto persuasivo</span></div>
+          <div class="def">Texto escrito com objetivo de persuadir e levar o leitor a uma ação específica.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="gestao de relacionamento com cliente crm customer relationship management sistema ou estrategia de gestao do relacionamento com clientes e controle das oportunidades comerciais">
+          <div class="term"><span class="term-main">CRM (Customer Relationship Management)</span><span class="term-slash">/</span><span class="term-pt">Gestão de relacionamento com cliente</span></div>
+          <div class="def">Sistema ou estratégia de gestão do relacionamento com clientes e controle das oportunidades comerciais.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="venda cruzada cross sell venda de um produto ou servico complementar ao que o cliente ja comprou ou esta comprando">
+          <div class="term"><span class="term-main">Cross-sell</span><span class="term-slash">/</span><span class="term-pt">Venda cruzada</span></div>
+          <div class="def">Venda de um produto ou serviço complementar ao que o cliente já comprou ou está comprando.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="chamada para acao cta call to action chamada direta para uma acao como compre agora solicite uma proposta ou saiba mais">
+          <div class="term"><span class="term-main">CTA (Call to Action)</span><span class="term-slash">/</span><span class="term-pt">Chamada para ação</span></div>
+          <div class="def">Chamada direta para uma ação, como &quot;Compre agora&quot;, &quot;Solicite uma proposta&quot; ou &quot;Saiba mais&quot;.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="experiencia do cliente customer experience cx experiencia completa do cliente em todos os pontos de contato com a empresa do primeiro acesso ao pos venda">
+          <div class="term"><span class="term-main">Customer Experience / CX</span><span class="term-slash">/</span><span class="term-pt">Experiência do cliente</span></div>
+          <div class="def">Experiência completa do cliente em todos os pontos de contato com a empresa — do primeiro acesso ao pós-venda.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="jornada do cliente customer journey jornada percorrida pelo cliente desde o momento em que conhece a empresa ate depois da compra">
+          <div class="term"><span class="term-main">Customer Journey</span><span class="term-slash">/</span><span class="term-pt">Jornada do cliente</span></div>
+          <div class="def">Jornada percorrida pelo cliente desde o momento em que conhece a empresa até depois da compra.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="sucesso do cliente customer success area ou estrategia focada em garantir que o cliente alcance resultados reais com o produto ou servico contratado">
+          <div class="term"><span class="term-main">Customer Success</span><span class="term-slash">/</span><span class="term-pt">Sucesso do cliente</span></div>
+          <div class="def">Área ou estratégia focada em garantir que o cliente alcance resultados reais com o produto ou serviço contratado.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="negocio oportunidade deal oportunidade comercial em negociacao um negocio em andamento entre a empresa e um potencial cliente">
+          <div class="term"><span class="term-main">Deal</span><span class="term-slash">/</span><span class="term-pt">Negócio/oportunidade</span></div>
+          <div class="def">Oportunidade comercial em negociação — um negócio em andamento entre a empresa e um potencial cliente.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="dores do cliente dores pain points problemas reais e urgentes que o cliente quer resolver a base de qualquer proposta de valor eficiente">
+          <div class="term"><span class="term-main">Dores / Pain Points</span><span class="term-slash">/</span><span class="term-pt">Dores do cliente</span></div>
+          <div class="def">Problemas reais e urgentes que o cliente quer resolver — a base de qualquer proposta de valor eficiente.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="engajamento engagement nivel de envolvimento e interacao do cliente ou usuario com a marca produto ou conteudo">
+          <div class="term"><span class="term-main">Engagement</span><span class="term-slash">/</span><span class="term-pt">Engajamento</span></div>
+          <div class="def">Nível de envolvimento e interação do cliente ou usuário com a marca, produto ou conteúdo.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="funil de vendas funil de vendas representacao das etapas que o cliente percorre ate comprar da descoberta ao fechamento">
+          <div class="term"><span class="term-main">Funil de Vendas</span></div>
+          <div class="def">Representação das etapas que o cliente percorre até comprar, da descoberta ao fechamento.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="estrategia de entrada no mercado go to market gtm estrategia para lancar um produto ou servico no mercado define o publico o canal e a abordagem">
+          <div class="term"><span class="term-main">Go-to-Market / GTM</span><span class="term-slash">/</span><span class="term-pt">Estratégia de entrada no mercado</span></div>
+          <div class="def">Estratégia para lançar um produto ou serviço no mercado — define o público, o canal e a abordagem.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="crescimento acelerado growth hacking estrategias de crescimento acelerado baseadas em testes rapidos dados e foco em resultado">
+          <div class="term"><span class="term-main">Growth Hacking</span><span class="term-slash">/</span><span class="term-pt">Crescimento acelerado</span></div>
+          <div class="def">Estratégias de crescimento acelerado baseadas em testes rápidos, dados e foco em resultado.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="marketing de atracao inbound marketing marketing de atracao a empresa cria conteudo e relacionamento para que o cliente venha ate ela">
+          <div class="term"><span class="term-main">Inbound Marketing</span><span class="term-slash">/</span><span class="term-pt">Marketing de atração</span></div>
+          <div class="def">Marketing de atração: a empresa cria conteúdo e relacionamento para que o cliente venha até ela.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="pagina de conversao landing page pagina criada com foco em conversao captura de leads venda ou cadastro">
+          <div class="term"><span class="term-main">Landing Page</span><span class="term-slash">/</span><span class="term-pt">Página de conversão</span></div>
+          <div class="def">Página criada com foco em conversão — captura de leads, venda ou cadastro.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="potenciais clientes leads contatos que demonstraram algum interesse e tem potencial de se tornarem clientes">
+          <div class="term"><span class="term-main">Leads</span><span class="term-slash">/</span><span class="term-pt">Potenciais clientes</span></div>
+          <div class="def">Contatos que demonstraram algum interesse e têm potencial de se tornarem clientes.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="valor do cliente no tempo ltv lifetime value valor total que um cliente tende a gerar durante todo o periodo de relacionamento com a empresa">
+          <div class="term"><span class="term-main">LTV (Lifetime Value)</span><span class="term-slash">/</span><span class="term-pt">Valor do cliente no tempo</span></div>
+          <div class="def">Valor total que um cliente tende a gerar durante todo o período de relacionamento com a empresa.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="aderencia ao mercado market fit grau de aderencia entre o produto ou servico oferecido e a necessidade real do mercado">
+          <div class="term"><span class="term-main">Market Fit</span><span class="term-slash">/</span><span class="term-pt">Aderência ao mercado</span></div>
+          <div class="def">Grau de aderência entre o produto ou serviço oferecido e a necessidade real do mercado.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="indice de recomendacao nps net promoter score indicador de satisfacao que mede a probabilidade de um cliente recomendar a empresa para outras pessoas">
+          <div class="term"><span class="term-main">NPS (Net Promoter Score)</span><span class="term-slash">/</span><span class="term-pt">Índice de recomendação</span></div>
+          <div class="def">Indicador de satisfação que mede a probabilidade de um cliente recomendar a empresa para outras pessoas.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="prospeccao ativa outbound marketing prospeccao ativa a empresa vai atras do cliente por ligacoes e mails ou visitas comerciais">
+          <div class="term"><span class="term-main">Outbound Marketing</span><span class="term-slash">/</span><span class="term-pt">Prospecção ativa</span></div>
+          <div class="def">Prospecção ativa: a empresa vai atrás do cliente por ligações, e-mails ou visitas comerciais.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="solucao para dor critica pain killer solucao que resolve uma dor urgente e critica do cliente o contrario de algo nice to have">
+          <div class="term"><span class="term-main">Pain Killer</span><span class="term-slash">/</span><span class="term-pt">Solução para dor crítica</span></div>
+          <div class="def">Solução que resolve uma dor urgente e crítica do cliente — o contrário de algo &quot;nice to have&quot;.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="cliente ideal persona perfil semificticio do cliente ideal criado com base em dados reais para orientar estrategias de marketing e produto">
+          <div class="term"><span class="term-main">Persona</span><span class="term-slash">/</span><span class="term-pt">Cliente ideal</span></div>
+          <div class="def">Perfil semifictício do cliente ideal, criado com base em dados reais para orientar estratégias de marketing e produto.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="carteira de oportunidades pipeline conjunto de oportunidades comerciais em diferentes etapas de negociacao">
+          <div class="term"><span class="term-main">Pipeline</span><span class="term-slash">/</span><span class="term-pt">Carteira de oportunidades</span></div>
+          <div class="def">Conjunto de oportunidades comerciais em diferentes etapas de negociação.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="aderencia produto mercado product market fit momento em que o produto resolve bem uma demanda real do mercado e comeca a crescer de forma organica">
+          <div class="term"><span class="term-main">Product-Market Fit</span><span class="term-slash">/</span><span class="term-pt">Aderência produto-mercado</span></div>
+          <div class="def">Momento em que o produto resolve bem uma demanda real do mercado e começa a crescer de forma orgânica.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="cliente potencial qualificado prospect potencial cliente qualificado alguem com perfil interesse e condicao real de comprar">
+          <div class="term"><span class="term-main">Prospect</span><span class="term-slash">/</span><span class="term-pt">Cliente potencial qualificado</span></div>
+          <div class="def">Potencial cliente qualificado — alguém com perfil, interesse e condição real de comprar.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="retencao retention capacidade de manter clientes ativos e comprando ao longo do tempo">
+          <div class="term"><span class="term-main">Retention</span><span class="term-slash">/</span><span class="term-pt">Retenção</span></div>
+          <div class="def">Capacidade de manter clientes ativos e comprando ao longo do tempo.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="otimizacao para buscas seo search engine optimization conjunto de tecnicas para melhorar o posicionamento de um site nos resultados organicos do google e outros buscadores">
+          <div class="term"><span class="term-main">SEO (Search Engine Optimization)</span><span class="term-slash">/</span><span class="term-pt">Otimização para buscas</span></div>
+          <div class="def">Conjunto de técnicas para melhorar o posicionamento de um site nos resultados orgânicos do Google e outros buscadores.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="ticket medio ticket medio valor medio gasto por cliente em cada compra ou transacao">
+          <div class="term"><span class="term-main">Ticket Médio</span></div>
+          <div class="def">Valor médio gasto por cliente em cada compra ou transação.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="venda superior upsell oferta de uma versao superior ou mais cara do produto que o cliente ja esta adquirindo">
+          <div class="term"><span class="term-main">Upsell</span><span class="term-slash">/</span><span class="term-pt">Venda superior</span></div>
+          <div class="def">Oferta de uma versão superior ou mais cara do produto que o cliente já está adquirindo.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="proposta unica de venda usp unique selling proposition diferencial unico da oferta o argumento principal que a torna mais atrativa frente a concorrencia">
+          <div class="term"><span class="term-main">USP (Unique Selling Proposition)</span><span class="term-slash">/</span><span class="term-pt">Proposta única de venda</span></div>
+          <div class="def">Diferencial único da oferta — o argumento principal que a torna mais atrativa frente à concorrência.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="experiencia do usuario ux user experience experiencia do usuario ao interagir com um produto sistema ou servico usabilidade fluidez e satisfacao">
+          <div class="term"><span class="term-main">UX / User Experience</span><span class="term-slash">/</span><span class="term-pt">Experiência do usuário</span></div>
+          <div class="def">Experiência do usuário ao interagir com um produto, sistema ou serviço — usabilidade, fluidez e satisfação.</div>
+        </article>
+        
+        <article class="card c3" data-cat="3" data-search="proposta de valor value proposition proposta de valor o beneficio real e especifico que a empresa entrega ao cliente">
+          <div class="term"><span class="term-main">Value Proposition</span><span class="term-slash">/</span><span class="term-pt">Proposta de valor</span></div>
+          <div class="def">Proposta de valor: o benefício real e específico que a empresa entrega ao cliente.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c4" data-section-cat="4">
+      <div class="cat-heading">
+        <div class="cat-dot c4"></div>
+        <span class="cat-title">Pessoas, Cultura e Liderança</span>
+        <span class="cat-count">15</span>
+        <div class="cat-rule c4"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c4" data-cat="4" data-search="responsabilidade com prestacao de contas accountability responsabilidade com prestacao de contas quem tem accountability responde pelos resultados das suas decisoes e entregas">
+          <div class="term"><span class="term-main">Accountability</span><span class="term-slash">/</span><span class="term-pt">Responsabilidade com prestação de contas</span></div>
+          <div class="def">Responsabilidade com prestação de contas — quem tem accountability responde pelos resultados das suas decisões e entregas.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="marca empregadora employer branding reputacao da empresa como lugar para trabalhar influencia a atracao e retencao de talentos">
+          <div class="term"><span class="term-main">Employer Branding</span><span class="term-slash">/</span><span class="term-pt">Marca empregadora</span></div>
+          <div class="def">Reputação da empresa como lugar para trabalhar — influencia a atração e retenção de talentos.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="autonomia empowerment dar autonomia e ferramentas para que as pessoas tomem decisoes e executem com mais confianca">
+          <div class="term"><span class="term-main">Empowerment</span><span class="term-slash">/</span><span class="term-pt">Autonomia</span></div>
+          <div class="def">Dar autonomia e ferramentas para que as pessoas tomem decisões e executem com mais confiança.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="habilidades tecnicas hard skills habilidades tecnicas mensuraveis como excel programacao financas ou analise de dados">
+          <div class="term"><span class="term-main">Hard Skills</span><span class="term-slash">/</span><span class="term-pt">Habilidades técnicas</span></div>
+          <div class="def">Habilidades técnicas mensuráveis — como Excel, programação, finanças ou análise de dados.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="cacador de talentos headhunter profissional especializado em recrutar executivos e talentos estrategicos para posicoes chave">
+          <div class="term"><span class="term-main">Headhunter</span><span class="term-slash">/</span><span class="term-pt">Caçador de talentos</span></div>
+          <div class="def">Profissional especializado em recrutar executivos e talentos estratégicos para posições-chave.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="descricao do cargo job description descricao do cargo com responsabilidades requisitos e expectativas usada para atrair e avaliar candidatos">
+          <div class="term"><span class="term-main">Job Description</span><span class="term-slash">/</span><span class="term-pt">Descrição do cargo</span></div>
+          <div class="def">Descrição do cargo com responsabilidades, requisitos e expectativas — usada para atrair e avaliar candidatos.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="mentoria mentoria orientacao continua dada por alguem mais experiente para o desenvolvimento profissional de outra pessoa">
+          <div class="term"><span class="term-main">Mentoria</span></div>
+          <div class="def">Orientação contínua dada por alguém mais experiente para o desenvolvimento profissional de outra pessoa.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="rede de contatos networking construcao e manutencao de uma rede de contatos profissionais que gera oportunidades e parcerias">
+          <div class="term"><span class="term-main">Networking</span><span class="term-slash">/</span><span class="term-pt">Rede de contatos</span></div>
+          <div class="def">Construção e manutenção de uma rede de contatos profissionais que gera oportunidades e parcerias.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="desligamento estruturado offboarding processo estruturado de desligamento de um colaborador documentacao transferencia de conhecimento e saida organizada">
+          <div class="term"><span class="term-main">Offboarding</span><span class="term-slash">/</span><span class="term-pt">Desligamento estruturado</span></div>
+          <div class="def">Processo estruturado de desligamento de um colaborador — documentação, transferência de conhecimento e saída organizada.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="integracao onboarding processo de integracao de um novo colaborador apresentacao da cultura processos e time">
+          <div class="term"><span class="term-main">Onboarding</span><span class="term-slash">/</span><span class="term-pt">Integração</span></div>
+          <div class="def">Processo de integração de um novo colaborador — apresentação da cultura, processos e time.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="postura de dono ownership postura de dono assumir responsabilidade total pelo resultado sem esperar que outra pessoa resolva">
+          <div class="term"><span class="term-main">Ownership</span><span class="term-slash">/</span><span class="term-pt">Postura de dono</span></div>
+          <div class="def">Postura de dono: assumir responsabilidade total pelo resultado, sem esperar que outra pessoa resolva.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="conjunto de habilidades skill set conjunto de habilidades tecnicas e comportamentais que uma pessoa possui e aplica no trabalho">
+          <div class="term"><span class="term-main">Skill Set</span><span class="term-slash">/</span><span class="term-pt">Conjunto de habilidades</span></div>
+          <div class="def">Conjunto de habilidades técnicas e comportamentais que uma pessoa possui e aplica no trabalho.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="habilidades comportamentais soft skills habilidades comportamentais como comunicacao lideranca inteligencia emocional e trabalho em equipe">
+          <div class="term"><span class="term-main">Soft Skills</span><span class="term-slash">/</span><span class="term-pt">Habilidades comportamentais</span></div>
+          <div class="def">Habilidades comportamentais — como comunicação, liderança, inteligência emocional e trabalho em equipe.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="aquisicao de talentos talent acquisition processo estrategico de recrutamento focado em atrair os melhores talentos para a empresa">
+          <div class="term"><span class="term-main">Talent Acquisition</span><span class="term-slash">/</span><span class="term-pt">Aquisição de talentos</span></div>
+          <div class="def">Processo estratégico de recrutamento focado em atrair os melhores talentos para a empresa.</div>
+        </article>
+        
+        <article class="card c4" data-cat="4" data-search="rotatividade turnover taxa de rotatividade de funcionarios alto turnover indica problema de cultura gestao ou satisfacao">
+          <div class="term"><span class="term-main">Turnover</span><span class="term-slash">/</span><span class="term-pt">Rotatividade</span></div>
+          <div class="def">Taxa de rotatividade de funcionários. Alto turnover indica problema de cultura, gestão ou satisfação.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c5" data-section-cat="5">
+      <div class="cat-heading">
+        <div class="cat-dot c5"></div>
+        <span class="cat-title">Projetos, Produtividade e Tecnologia</span>
+        <span class="cat-count">20</span>
+        <div class="cat-rule c5"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c5" data-cat="5" data-search="agil agile metodologia agil de gestao de projetos baseada em ciclos curtos entregas continuas e adaptacao rapida">
+          <div class="term"><span class="term-main">Agile</span><span class="term-slash">/</span><span class="term-pt">Ágil</span></div>
+          <div class="def">Metodologia ágil de gestão de projetos baseada em ciclos curtos, entregas contínuas e adaptação rápida.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="interface de programacao api application programming interface interface que permite que sistemas diferentes se comuniquem e troquem dados entre si">
+          <div class="term"><span class="term-main">API (Application Programming Interface)</span><span class="term-slash">/</span><span class="term-pt">Interface de programação</span></div>
+          <div class="def">Interface que permite que sistemas diferentes se comuniquem e troquem dados entre si.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="lista de pendencias backlog lista de tarefas funcionalidades ou melhorias pendentes organizadas por prioridade">
+          <div class="term"><span class="term-main">Backlog</span><span class="term-slash">/</span><span class="term-pt">Lista de pendências</span></div>
+          <div class="def">Lista de tarefas, funcionalidades ou melhorias pendentes, organizadas por prioridade.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="impedimento blocker impedimento que trava o avanco de uma tarefa ou projeto e precisa ser resolvido para seguir em frente">
+          <div class="term"><span class="term-main">Blocker</span><span class="term-slash">/</span><span class="term-pt">Impedimento</span></div>
+          <div class="def">Impedimento que trava o avanço de uma tarefa ou projeto e precisa ser resolvido para seguir em frente.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="nuvem cloud nuvem modelo de uso de armazenamento sistemas e servicos pela internet sem precisar de infraestrutura fisica local">
+          <div class="term"><span class="term-main">Cloud / Nuvem</span><span class="term-slash">/</span><span class="term-pt">Nuvem</span></div>
+          <div class="def">Modelo de uso de armazenamento, sistemas e serviços pela internet — sem precisar de infraestrutura física local.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="prazo final deadline prazo final para entrega de uma tarefa projeto ou etapa nao negociavel sem acordo previo">
+          <div class="term"><span class="term-main">Deadline</span><span class="term-slash">/</span><span class="term-pt">Prazo final</span></div>
+          <div class="def">Prazo final para entrega de uma tarefa, projeto ou etapa. Não negociável sem acordo prévio.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="dependencia dependency dependencia entre tarefas times ou sistemas uma entrega fica travada ate que outra seja concluida">
+          <div class="term"><span class="term-main">Dependency</span><span class="term-slash">/</span><span class="term-pt">Dependência</span></div>
+          <div class="def">Dependência entre tarefas, times ou sistemas — uma entrega fica travada até que outra seja concluída.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="sistema integrado de gestao erp enterprise resource planning sistema integrado de gestao que centraliza financas estoque compras rh e outras operacoes da empresa">
+          <div class="term"><span class="term-main">ERP (Enterprise Resource Planning)</span><span class="term-slash">/</span><span class="term-pt">Sistema integrado de gestão</span></div>
+          <div class="def">Sistema integrado de gestão que centraliza finanças, estoque, compras, RH e outras operações da empresa.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="estrutura metodologia framework estrutura ou metodologia usada para organizar o trabalho o raciocinio ou o desenvolvimento de um projeto">
+          <div class="term"><span class="term-main">Framework</span><span class="term-slash">/</span><span class="term-pt">Estrutura/metodologia</span></div>
+          <div class="def">Estrutura ou metodologia usada para organizar o trabalho, o raciocínio ou o desenvolvimento de um projeto.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="baixo codigo low code plataforma que permite criar sistemas com pouca necessidade de programacao manual">
+          <div class="term"><span class="term-main">Low-code</span><span class="term-slash">/</span><span class="term-pt">Baixo código</span></div>
+          <div class="def">Plataforma que permite criar sistemas com pouca necessidade de programação manual.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="sem codigo no code criacao de sistemas automacoes ou paginas sem nenhuma linha de codigo usando interfaces visuais">
+          <div class="term"><span class="term-main">No-code</span><span class="term-slash">/</span><span class="term-pt">Sem código</span></div>
+          <div class="def">Criação de sistemas, automações ou páginas sem nenhuma linha de código — usando interfaces visuais.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="terceirizacao outsourcing terceirizacao de atividades servicos ou processos para fornecedores externos especializados">
+          <div class="term"><span class="term-main">Outsourcing</span><span class="term-slash">/</span><span class="term-pt">Terceirização</span></div>
+          <div class="def">Terceirização de atividades, serviços ou processos para fornecedores externos especializados.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="responsavel owner responsavel direto por uma entrega decisao ou area quem vai garantir que aconteca">
+          <div class="term"><span class="term-main">Owner</span><span class="term-slash">/</span><span class="term-pt">Responsável</span></div>
+          <div class="def">Responsável direto por uma entrega, decisão ou área — quem vai garantir que aconteça.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="roteiro estrategico roadmap roteiro estrategico com etapas prioridades e direcao de um produto ou projeto ao longo do tempo">
+          <div class="term"><span class="term-main">Roadmap</span><span class="term-slash">/</span><span class="term-pt">Roteiro estratégico</span></div>
+          <div class="def">Roteiro estratégico com etapas, prioridades e direção de um produto ou projeto ao longo do tempo.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="automacao robotica de processos rpa robotic process automation automacao de tarefas repetitivas e padronizadas por meio de robos de software">
+          <div class="term"><span class="term-main">RPA (Robotic Process Automation)</span><span class="term-slash">/</span><span class="term-pt">Automação robótica de processos</span></div>
+          <div class="def">Automação de tarefas repetitivas e padronizadas por meio de robôs de software.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="software como servico saas software as a service modelo em que o software e acessado como servico via internet geralmente por assinatura mensal ou anual">
+          <div class="term"><span class="term-main">SaaS (Software as a Service)</span><span class="term-slash">/</span><span class="term-pt">Software como serviço</span></div>
+          <div class="def">Modelo em que o software é acessado como serviço via internet, geralmente por assinatura mensal ou anual.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="ferramenta de comunicacao slack ferramenta de comunicacao interna por canais e mensagens diretas muito usada por times e empresas">
+          <div class="term"><span class="term-main">Slack</span><span class="term-slash">/</span><span class="term-pt">Ferramenta de comunicação</span></div>
+          <div class="def">Ferramenta de comunicação interna por canais e mensagens diretas, muito usada por times e empresas.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="ciclo de trabalho sprint ciclo curto de trabalho geralmente 1 a 2 semanas com escopo definido e meta de entrega">
+          <div class="term"><span class="term-main">Sprint</span><span class="term-slash">/</span><span class="term-pt">Ciclo de trabalho</span></div>
+          <div class="def">Ciclo curto de trabalho — geralmente 1 a 2 semanas — com escopo definido e meta de entrega.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="equipe multidisciplinar squad equipe pequena e multidisciplinar com autonomia para trabalhar em um objetivo especifico de ponta a ponta">
+          <div class="term"><span class="term-main">Squad</span><span class="term-slash">/</span><span class="term-pt">Equipe multidisciplinar</span></div>
+          <div class="def">Equipe pequena e multidisciplinar com autonomia para trabalhar em um objetivo específico de ponta a ponta.</div>
+        </article>
+        
+        <article class="card c5" data-cat="5" data-search="fluxo de trabalho workflow fluxo de trabalho com etapas responsaveis e sequencia definidos para executar um processo">
+          <div class="term"><span class="term-main">Workflow</span><span class="term-slash">/</span><span class="term-pt">Fluxo de trabalho</span></div>
+          <div class="def">Fluxo de trabalho com etapas, responsáveis e sequência definidos para executar um processo.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c6" data-section-cat="6">
+      <div class="cat-heading">
+        <div class="cat-dot c6"></div>
+        <span class="cat-title">Dados, BI, IA e Automação</span>
+        <span class="cat-count">23</span>
+        <div class="cat-rule c6"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c6" data-cat="6" data-search="teste a b a b test teste que compara duas versoes de algo pagina e mail ou anuncio para descobrir qual tem melhor desempenho">
+          <div class="term"><span class="term-main">A/B Test</span><span class="term-slash">/</span><span class="term-pt">Teste A/B</span></div>
+          <div class="def">Teste que compara duas versões de algo — página, e-mail ou anúncio — para descobrir qual tem melhor desempenho.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="agente de ia ai agent agente de ia sistema de inteligencia artificial que executa tarefas com autonomia tomando decisoes sem intervencao humana constante">
+          <div class="term"><span class="term-main">AI Agent / Agente de IA</span><span class="term-slash">/</span><span class="term-pt">Agente de IA</span></div>
+          <div class="def">Sistema de inteligência artificial que executa tarefas com autonomia, tomando decisões sem intervenção humana constante.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="orientado por ia ai driven diz se de um processo decisao ou produto orientado e potencializado por inteligencia artificial">
+          <div class="term"><span class="term-main">AI-Driven</span><span class="term-slash">/</span><span class="term-pt">Orientado por IA</span></div>
+          <div class="def">Diz-se de um processo, decisão ou produto orientado e potencializado por inteligência artificial.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="analise de dados analytics analise de dados para entender desempenho comportamento e resultados base para decisoes mais inteligentes">
+          <div class="term"><span class="term-main">Analytics</span><span class="term-slash">/</span><span class="term-pt">Análise de dados</span></div>
+          <div class="def">Análise de dados para entender desempenho, comportamento e resultados — base para decisões mais inteligentes.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="automacao em primeiro lugar automation first mentalidade de priorizar automacao antes de contratar mais pessoas ou criar mais processos manuais">
+          <div class="term"><span class="term-main">Automation First</span><span class="term-slash">/</span><span class="term-pt">Automação em primeiro lugar</span></div>
+          <div class="def">Mentalidade de priorizar automação antes de contratar mais pessoas ou criar mais processos manuais.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="inteligencia de negocios bi business intelligence conjunto de dados ferramentas e analises que transformam informacao bruta em inteligencia para o negocio">
+          <div class="term"><span class="term-main">BI / Business Intelligence</span><span class="term-slash">/</span><span class="term-pt">Inteligência de negócios</span></div>
+          <div class="def">Conjunto de dados, ferramentas e análises que transformam informação bruta em inteligência para o negócio.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="coorte grupo analisado cohort grupo de clientes ou usuarios com uma caracteristica em comum como o mes de aquisicao analisado ao longo do tempo">
+          <div class="term"><span class="term-main">Cohort</span><span class="term-slash">/</span><span class="term-pt">Coorte/grupo analisado</span></div>
+          <div class="def">Grupo de clientes ou usuários com uma característica em comum — como o mês de aquisição — analisado ao longo do tempo.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="analise de coorte cohort analysis analise do comportamento de um grupo ao longo do tempo para entender padroes como retencao e engajamento">
+          <div class="term"><span class="term-main">Cohort Analysis</span><span class="term-slash">/</span><span class="term-pt">Análise de coorte</span></div>
+          <div class="def">Análise do comportamento de um grupo ao longo do tempo para entender padrões como retenção e engajamento.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="assistente de ia copilot assistente de inteligencia artificial que apoia o trabalho humano sugere gera conteudo e acelera tarefas">
+          <div class="term"><span class="term-main">Copilot</span><span class="term-slash">/</span><span class="term-pt">Assistente de IA</span></div>
+          <div class="def">Assistente de inteligência artificial que apoia o trabalho humano — sugere, gera conteúdo e acelera tarefas.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="criacao de paineis dashboarding criacao e uso de paineis visuais com indicadores para acompanhar resultados em tempo real">
+          <div class="term"><span class="term-main">Dashboarding</span><span class="term-slash">/</span><span class="term-pt">Criação de painéis</span></div>
+          <div class="def">Criação e uso de painéis visuais com indicadores para acompanhar resultados em tempo real.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="lago de dados data lake repositorio centralizado que armazena grandes volumes de dados brutos para analise futura">
+          <div class="term"><span class="term-main">Data Lake</span><span class="term-slash">/</span><span class="term-pt">Lago de dados</span></div>
+          <div class="def">Repositório centralizado que armazena grandes volumes de dados brutos para análise futura.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="qualidade dos dados data quality qualidade dos dados disponiveis considera precisao completude consistencia e confiabilidade das informacoes">
+          <div class="term"><span class="term-main">Data Quality</span><span class="term-slash">/</span><span class="term-pt">Qualidade dos dados</span></div>
+          <div class="def">Qualidade dos dados disponíveis — considera precisão, completude, consistência e confiabilidade das informações.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="visualizacao de dados data visualization apresentacao de dados em formato visual graficos mapas e paineis para facilitar a leitura e interpretacao">
+          <div class="term"><span class="term-main">Data Visualization</span><span class="term-slash">/</span><span class="term-pt">Visualização de dados</span></div>
+          <div class="def">Apresentação de dados em formato visual — gráficos, mapas e painéis — para facilitar a leitura e interpretação.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="orientado por dados data driven cultura ou decisao baseada em dados concretos nao em intuicao ou achismo">
+          <div class="term"><span class="term-main">Data-driven</span><span class="term-slash">/</span><span class="term-pt">Orientado por dados</span></div>
+          <div class="def">Cultura ou decisão baseada em dados concretos, não em intuição ou achismo.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="aprofundamento da analise drill down aprofundamento de uma analise para ver o detalhe por categoria periodo produto ou regiao">
+          <div class="term"><span class="term-main">Drill-down</span><span class="term-slash">/</span><span class="term-pt">Aprofundamento da análise</span></div>
+          <div class="def">Aprofundamento de uma análise para ver o detalhe por categoria, período, produto ou região.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="visao agregada drill up retorno da analise detalhada para uma visao mais agregada ou consolidada">
+          <div class="term"><span class="term-main">Drill-up</span><span class="term-slash">/</span><span class="term-pt">Visão agregada</span></div>
+          <div class="def">Retorno da análise detalhada para uma visão mais agregada ou consolidada.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="extrair transformar e carregar etl extract transform and load processo de extrair dados de uma fonte trata los e carrega los em outro sistema para analise">
+          <div class="term"><span class="term-main">ETL (Extract, Transform and Load)</span><span class="term-slash">/</span><span class="term-pt">Extrair, transformar e carregar</span></div>
+          <div class="def">Processo de extrair dados de uma fonte, tratá-los e carregá-los em outro sistema para análise.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="experimentacao experimentation cultura de testar hipoteses com dados antes de escalar uma decisao reduz risco e aumenta assertividade">
+          <div class="term"><span class="term-main">Experimentation</span><span class="term-slash">/</span><span class="term-pt">Experimentação</span></div>
+          <div class="def">Cultura de testar hipóteses com dados antes de escalar uma decisão — reduz risco e aumenta assertividade.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="hipotese hypothesis hipotese a ser testada com dados ou experimentos praticos antes de ser assumida como verdade">
+          <div class="term"><span class="term-main">Hypothesis</span><span class="term-slash">/</span><span class="term-pt">Hipótese</span></div>
+          <div class="def">Hipótese a ser testada com dados ou experimentos práticos antes de ser assumida como verdade.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="conclusoes acionaveis insights conclusoes relevantes e acionaveis extraidas da analise de dados ou informacoes">
+          <div class="term"><span class="term-main">Insights</span><span class="term-slash">/</span><span class="term-pt">Conclusões acionáveis</span></div>
+          <div class="def">Conclusões relevantes e acionáveis extraídas da análise de dados ou informações.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="analise preditiva predictive analytics analise preditiva que usa dados historicos para estimar comportamentos riscos ou cenarios futuros">
+          <div class="term"><span class="term-main">Predictive Analytics</span><span class="term-slash">/</span><span class="term-pt">Análise preditiva</span></div>
+          <div class="def">Análise preditiva que usa dados históricos para estimar comportamentos, riscos ou cenários futuros.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="engenharia de prompt prompt engineering tecnica de formular comandos melhores para obter resultados mais precisos e uteis de ferramentas de ia">
+          <div class="term"><span class="term-main">Prompt Engineering</span><span class="term-slash">/</span><span class="term-pt">Engenharia de prompt</span></div>
+          <div class="def">Técnica de formular comandos melhores para obter resultados mais precisos e úteis de ferramentas de IA.</div>
+        </article>
+        
+        <article class="card c6" data-cat="6" data-search="fonte unica da verdade single source of truth fonte unica de dados confiavel usada por todos elimina versoes diferentes e conflitos de informacao">
+          <div class="term"><span class="term-main">Single Source of Truth</span><span class="term-slash">/</span><span class="term-pt">Fonte única da verdade</span></div>
+          <div class="def">Fonte única de dados confiável usada por todos — elimina versões diferentes e conflitos de informação.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c7" data-section-cat="7">
+      <div class="cat-heading">
+        <div class="cat-dot c7"></div>
+        <span class="cat-title">Finanças, Investimentos e Performance</span>
+        <span class="cat-count">21</span>
+        <div class="cat-rule c7"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c7" data-cat="7" data-search="receita recorrente anual arr annual recurring revenue receita recorrente anual muito usada em negocios de assinatura para medir o crescimento previsivel">
+          <div class="term"><span class="term-main">ARR (Annual Recurring Revenue)</span><span class="term-slash">/</span><span class="term-pt">Receita recorrente anual</span></div>
+          <div class="def">Receita recorrente anual — muito usada em negócios de assinatura para medir o crescimento previsível.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="ponto de equilibrio break even ponto de equilibrio em que as receitas cobrem exatamente os custos a empresa para de ter prejuizo">
+          <div class="term"><span class="term-main">Break-even</span><span class="term-slash">/</span><span class="term-pt">Ponto de equilíbrio</span></div>
+          <div class="def">Ponto de equilíbrio em que as receitas cobrem exatamente os custos — a empresa para de ter prejuízo.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="ritmo de queima de caixa burn rate velocidade com que a empresa consome seu caixa quanto esta gastando por mes acima do que entra">
+          <div class="term"><span class="term-main">Burn Rate</span><span class="term-slash">/</span><span class="term-pt">Ritmo de queima de caixa</span></div>
+          <div class="def">Velocidade com que a empresa consome seu caixa — quanto está gastando por mês acima do que entra.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="investimento em capital capex capital expenditure investimento em bens de capital equipamentos imoveis tecnologia e infraestrutura">
+          <div class="term"><span class="term-main">CAPEX (Capital Expenditure)</span><span class="term-slash">/</span><span class="term-pt">Investimento em capital</span></div>
+          <div class="def">Investimento em bens de capital — equipamentos, imóveis, tecnologia e infraestrutura.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="queima de caixa cash burn queima de caixa em um periodo quanto dinheiro saiu a mais do que entrou">
+          <div class="term"><span class="term-main">Cash Burn</span><span class="term-slash">/</span><span class="term-pt">Queima de caixa</span></div>
+          <div class="def">Queima de caixa em um período — quanto dinheiro saiu a mais do que entrou.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="fluxo de caixa cash flow fluxo de caixa acompanhamento de todas as entradas e saidas de dinheiro da empresa">
+          <div class="term"><span class="term-main">Cash Flow</span><span class="term-slash">/</span><span class="term-pt">Fluxo de caixa</span></div>
+          <div class="def">Fluxo de caixa: acompanhamento de todas as entradas e saídas de dinheiro da empresa.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="margem de contribuicao contribution margin margem de contribuicao o que sobra da receita apos deduzir custos e despesas variaveis diretos">
+          <div class="term"><span class="term-main">Contribution Margin</span><span class="term-slash">/</span><span class="term-pt">Margem de contribuição</span></div>
+          <div class="def">Margem de contribuição: o que sobra da receita após deduzir custos e despesas variáveis diretos.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="demonstracao do resultado dre demonstracao do resultado do exercicio mostra receitas custos despesas e o lucro ou prejuizo do periodo">
+          <div class="term"><span class="term-main">DRE</span><span class="term-slash">/</span><span class="term-pt">Demonstração do resultado</span></div>
+          <div class="def">Demonstração do Resultado do Exercício — mostra receitas, custos, despesas e o lucro ou prejuízo do período.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="resultado operacional ajustado ebitda resultado operacional antes de juros impostos depreciacao e amortizacao mede a eficiencia operacional pura">
+          <div class="term"><span class="term-main">EBITDA</span><span class="term-slash">/</span><span class="term-pt">Resultado operacional ajustado</span></div>
+          <div class="def">Resultado operacional antes de juros, impostos, depreciação e amortização — mede a eficiência operacional pura.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="previsao forecast previsao de resultados futuros baseada em dados historicos tendencias e premissas do negocio">
+          <div class="term"><span class="term-main">Forecast</span><span class="term-slash">/</span><span class="term-pt">Previsão</span></div>
+          <div class="def">Previsão de resultados futuros baseada em dados históricos, tendências e premissas do negócio.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="margem bruta gross margin margem bruta o que sobra da receita apos descontar os custos diretos de producao ou entrega">
+          <div class="term"><span class="term-main">Gross Margin</span><span class="term-slash">/</span><span class="term-pt">Margem bruta</span></div>
+          <div class="def">Margem bruta: o que sobra da receita após descontar os custos diretos de produção ou entrega.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="receita recorrente mensal mrr monthly recurring revenue receita recorrente mensal metrica central em negocios de assinatura para medir saude e crescimento">
+          <div class="term"><span class="term-main">MRR (Monthly Recurring Revenue)</span><span class="term-slash">/</span><span class="term-pt">Receita recorrente mensal</span></div>
+          <div class="def">Receita recorrente mensal — métrica central em negócios de assinatura para medir saúde e crescimento.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="despesa operacional opex operational expenditure despesas operacionais recorrentes do dia a dia do negocio aluguel salarios energia etc">
+          <div class="term"><span class="term-main">OPEX (Operational Expenditure)</span><span class="term-slash">/</span><span class="term-pt">Despesa operacional</span></div>
+          <div class="def">Despesas operacionais recorrentes do dia a dia do negócio — aluguel, salários, energia, etc.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="lucros e perdas p l profit and loss demonstrativo de lucros e perdas visao consolidada da performance financeira em um periodo">
+          <div class="term"><span class="term-main">P&amp;L / Profit and Loss</span><span class="term-slash">/</span><span class="term-pt">Lucros e perdas</span></div>
+          <div class="def">Demonstrativo de lucros e perdas — visão consolidada da performance financeira em um período.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="retorno do investimento no tempo payback tempo necessario para recuperar o valor investido em um projeto ou ativo">
+          <div class="term"><span class="term-main">Payback</span><span class="term-slash">/</span><span class="term-pt">Retorno do investimento no tempo</span></div>
+          <div class="def">Tempo necessário para recuperar o valor investido em um projeto ou ativo.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="retorno sobre investimento roi return on investment retorno sobre o investimento quanto foi gerado em relacao ao que foi gasto">
+          <div class="term"><span class="term-main">ROI (Return on Investment)</span><span class="term-slash">/</span><span class="term-pt">Retorno sobre investimento</span></div>
+          <div class="def">Retorno sobre o investimento — quanto foi gerado em relação ao que foi gasto.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="projecao pelo ritmo atual run rate projecao do resultado anual baseada no ritmo atual de receita ou crescimento">
+          <div class="term"><span class="term-main">Run Rate</span><span class="term-slash">/</span><span class="term-pt">Projeção pelo ritmo atual</span></div>
+          <div class="def">Projeção do resultado anual baseada no ritmo atual de receita ou crescimento.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="percentual retido take rate percentual que uma plataforma ou empresa retem sobre cada transacao realizada por seus usuarios">
+          <div class="term"><span class="term-main">Take Rate</span><span class="term-slash">/</span><span class="term-pt">Percentual retido</span></div>
+          <div class="def">Percentual que uma plataforma ou empresa retém sobre cada transação realizada por seus usuários.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="economia por unidade unit economics analise economica por unidade cliente venda ou loja para entender a rentabilidade individual">
+          <div class="term"><span class="term-main">Unit Economics</span><span class="term-slash">/</span><span class="term-pt">Economia por unidade</span></div>
+          <div class="def">Análise econômica por unidade — cliente, venda ou loja — para entender a rentabilidade individual.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="avaliacao de valor valuation avaliacao do valor economico de uma empresa ativo ou negocio">
+          <div class="term"><span class="term-main">Valuation</span><span class="term-slash">/</span><span class="term-pt">Avaliação de valor</span></div>
+          <div class="def">Avaliação do valor econômico de uma empresa, ativo ou negócio.</div>
+        </article>
+        
+        <article class="card c7" data-cat="7" data-search="capital de giro working capital capital de giro recursos necessarios para manter a operacao funcionando no curto prazo">
+          <div class="term"><span class="term-main">Working Capital</span><span class="term-slash">/</span><span class="term-pt">Capital de giro</span></div>
+          <div class="def">Capital de giro: recursos necessários para manter a operação funcionando no curto prazo.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c8" data-section-cat="8">
+      <div class="cat-heading">
+        <div class="cat-dot c8"></div>
+        <span class="cat-title">Consultoria, Negociação e Contratos</span>
+        <span class="cat-count">15</span>
+        <div class="cat-rule c8"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c8" data-cat="8" data-search="adesao buy in adesao dos envolvidos ou decisores a uma ideia proposta ou mudanca sem buy in o projeto trava">
+          <div class="term"><span class="term-main">Buy-in</span><span class="term-slash">/</span><span class="term-pt">Adesão</span></div>
+          <div class="def">Adesão dos envolvidos ou decisores a uma ideia, proposta ou mudança — sem buy-in, o projeto trava.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="conformidade compliance conformidade com leis normas contratos e politicas internas operar dentro das regras estabelecidas">
+          <div class="term"><span class="term-main">Compliance</span><span class="term-slash">/</span><span class="term-pt">Conformidade</span></div>
+          <div class="def">Conformidade com leis, normas, contratos e políticas internas — operar dentro das regras estabelecidas.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="entregaveis deliverables entregaveis definidos em um projeto ou contrato relatorios dashboards documentos ou apresentacoes">
+          <div class="term"><span class="term-main">Deliverables</span><span class="term-slash">/</span><span class="term-pt">Entregáveis</span></div>
+          <div class="def">Entregáveis definidos em um projeto ou contrato — relatórios, dashboards, documentos ou apresentações.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="auditoria previa due diligence investigacao e auditoria previa para avaliar riscos e oportunidades antes de fechar um negocio">
+          <div class="term"><span class="term-main">Due Diligence</span><span class="term-slash">/</span><span class="term-pt">Auditoria prévia</span></div>
+          <div class="def">Investigação e auditoria prévia para avaliar riscos e oportunidades antes de fechar um negócio.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="governanca governance governanca conjunto de regras processos e responsabilidades que orientam como a empresa e gerida e controlada">
+          <div class="term"><span class="term-main">Governance / Governança</span><span class="term-slash">/</span><span class="term-pt">Governança</span></div>
+          <div class="def">Conjunto de regras, processos e responsabilidades que orientam como a empresa é gerida e controlada.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="entrega acima do combinado overdelivery entregar mais do que foi prometido ou contratado gera confianca e diferencia o fornecedor">
+          <div class="term"><span class="term-main">Overdelivery</span><span class="term-slash">/</span><span class="term-pt">Entrega acima do combinado</span></div>
+          <div class="def">Entregar mais do que foi prometido ou contratado — gera confiança e diferencia o fornecedor.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="mensalidade fixa retainer pagamento fixo mensal por disponibilidade ou prestacao continua de servico comum em consultoria">
+          <div class="term"><span class="term-main">Retainer</span><span class="term-slash">/</span><span class="term-pt">Mensalidade fixa</span></div>
+          <div class="def">Pagamento fixo mensal por disponibilidade ou prestação contínua de serviço — comum em consultoria.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="compartilhamento de risco risk sharing compartilhamento de riscos entre as partes de uma negociacao reduzindo a exposicao individual">
+          <div class="term"><span class="term-main">Risk Sharing</span><span class="term-slash">/</span><span class="term-pt">Compartilhamento de risco</span></div>
+          <div class="def">Compartilhamento de riscos entre as partes de uma negociação, reduzindo a exposição individual.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="escopo scope escopo limite claro do que sera entregue em um projeto ou contrato o que esta dentro e o que esta fora">
+          <div class="term"><span class="term-main">Scope / Escopo</span><span class="term-slash">/</span><span class="term-pt">Escopo</span></div>
+          <div class="def">Limite claro do que será entregue em um projeto ou contrato — o que está dentro e o que está fora.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="aumento indevido de escopo scope creep expansao do escopo original sem ajuste de prazo custo ou condicoes causa atrasos e conflitos">
+          <div class="term"><span class="term-main">Scope Creep</span><span class="term-slash">/</span><span class="term-pt">Aumento indevido de escopo</span></div>
+          <div class="def">Expansão do escopo original sem ajuste de prazo, custo ou condições — causa atrasos e conflitos.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="risco proprio envolvido skin in the game envolvimento real no risco e resultado de uma decisao quem tem skin in the game perde se der errado">
+          <div class="term"><span class="term-main">Skin in the Game</span><span class="term-slash">/</span><span class="term-pt">Risco próprio envolvido</span></div>
+          <div class="def">Envolvimento real no risco e resultado de uma decisão — quem tem skin in the game perde se der errado.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="acordo de nivel de servico sla service level agreement acordo de nivel de servico que define prazos qualidade responsabilidades e penalidades em caso de descumprimento">
+          <div class="term"><span class="term-main">SLA (Service Level Agreement)</span><span class="term-slash">/</span><span class="term-pt">Acordo de nível de serviço</span></div>
+          <div class="def">Acordo de nível de serviço que define prazos, qualidade, responsabilidades e penalidades em caso de descumprimento.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="taxa de sucesso success fee remuneracao variavel paga pelo resultado o prestador so recebe se entregar o que foi acordado">
+          <div class="term"><span class="term-main">Success Fee</span><span class="term-slash">/</span><span class="term-pt">Taxa de sucesso</span></div>
+          <div class="def">Remuneração variável paga pelo resultado — o prestador só recebe se entregar o que foi acordado.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="captura de valor value capture capacidade de capturar economicamente parte do valor gerado por uma solucao ou servico">
+          <div class="term"><span class="term-main">Value Capture</span><span class="term-slash">/</span><span class="term-pt">Captura de valor</span></div>
+          <div class="def">Capacidade de capturar economicamente parte do valor gerado por uma solução ou serviço.</div>
+        </article>
+        
+        <article class="card c8" data-cat="8" data-search="criacao de valor value creation criacao de valor real e mensuravel para o cliente a operacao ou o negocio">
+          <div class="term"><span class="term-main">Value Creation</span><span class="term-slash">/</span><span class="term-pt">Criação de valor</span></div>
+          <div class="def">Criação de valor real e mensurável para o cliente, a operação ou o negócio.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="cat-section section-c9" data-section-cat="9">
+      <div class="cat-heading">
+        <div class="cat-dot c9"></div>
+        <span class="cat-title">Operação, Processos e Eficiência</span>
+        <span class="cat-count">13</span>
+        <div class="cat-rule c9"></div>
+      </div>
+      <div class="cards-row">
+        
+        <article class="card c9" data-cat="9" data-search="gargalo bottleneck gargalo ponto do processo que limita a capacidade total e trava o fluxo onde tudo desacelera ou para">
+          <div class="term"><span class="term-main">Bottleneck / Gargalo</span><span class="term-slash">/</span><span class="term-pt">Gargalo</span></div>
+          <div class="def">Ponto do processo que limita a capacidade total e trava o fluxo — onde tudo desacelera ou para.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="planejamento de capacidade capacity planning planejamento da capacidade necessaria para atender a demanda futura sem sobrecarga ou desperdicio">
+          <div class="term"><span class="term-main">Capacity Planning</span><span class="term-slash">/</span><span class="term-pt">Planejamento de capacidade</span></div>
+          <div class="def">Planejamento da capacidade necessária para atender a demanda futura sem sobrecarga ou desperdício.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="mao na massa hands on postura pratica de colocar a mao na massa e executar diretamente o oposto de so delegar">
+          <div class="term"><span class="term-main">Hands-on</span><span class="term-slash">/</span><span class="term-pt">Mão na massa</span></div>
+          <div class="def">Postura prática de colocar a mão na massa e executar diretamente — o oposto de só delegar.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="melhoria continua kaizen filosofia japonesa de melhoria continua aplicada a processos pessoas e operacao">
+          <div class="term"><span class="term-main">Kaizen</span><span class="term-slash">/</span><span class="term-pt">Melhoria contínua</span></div>
+          <div class="def">Filosofia japonesa de melhoria contínua aplicada a processos, pessoas e operação.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="gestao enxuta lean metodologia de gestao enxuta focada em eliminar desperdicios e aumentar a eficiencia de processos">
+          <div class="term"><span class="term-main">Lean</span><span class="term-slash">/</span><span class="term-pt">Gestão enxuta</span></div>
+          <div class="def">Metodologia de gestão enxuta focada em eliminar desperdícios e aumentar a eficiência de processos.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="excelencia operacional operational excellence nivel de maturidade operacional em que os processos sao eficientes estaveis e bem controlados">
+          <div class="term"><span class="term-main">Operational Excellence</span><span class="term-slash">/</span><span class="term-pt">Excelência operacional</span></div>
+          <div class="def">Nível de maturidade operacional em que os processos são eficientes, estáveis e bem controlados.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="manual pratico playbook manual pratico com orientacoes padroes e passos para executar uma atividade de forma consistente">
+          <div class="term"><span class="term-main">Playbook</span><span class="term-slash">/</span><span class="term-pt">Manual prático</span></div>
+          <div class="def">Manual prático com orientações, padrões e passos para executar uma atividade de forma consistente.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="mineracao de processos process mining analise dos processos reais da empresa com base nos dados dos sistemas revela o que realmente acontece">
+          <div class="term"><span class="term-main">Process Mining</span><span class="term-slash">/</span><span class="term-pt">Mineração de processos</span></div>
+          <div class="def">Análise dos processos reais da empresa com base nos dados dos sistemas — revela o que realmente acontece.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="gestao de filas queue management gestao de filas e do fluxo de atendimento para reduzir espera e otimizar a experiencia do cliente">
+          <div class="term"><span class="term-main">Queue Management</span><span class="term-slash">/</span><span class="term-pt">Gestão de filas</span></div>
+          <div class="def">Gestão de filas e do fluxo de atendimento para reduzir espera e otimizar a experiência do cliente.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="alocacao de recursos resource allocation distribuicao estrategica de recursos pessoas tempo dinheiro e equipamentos entre as prioridades do negocio">
+          <div class="term"><span class="term-main">Resource Allocation</span><span class="term-slash">/</span><span class="term-pt">Alocação de recursos</span></div>
+          <div class="def">Distribuição estratégica de recursos — pessoas, tempo, dinheiro e equipamentos — entre as prioridades do negócio.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="procedimento operacional padrao sop standard operating procedure procedimento operacional padrao define como uma tarefa deve ser executada de forma uniforme e repetivel">
+          <div class="term"><span class="term-main">SOP (Standard Operating Procedure)</span><span class="term-slash">/</span><span class="term-pt">Procedimento operacional padrão</span></div>
+          <div class="def">Procedimento operacional padrão: define como uma tarefa deve ser executada de forma uniforme e repetível.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="capacidade de entrega throughput volume que um processo ou sistema consegue processar e entregar em um determinado periodo">
+          <div class="term"><span class="term-main">Throughput</span><span class="term-slash">/</span><span class="term-pt">Capacidade de entrega</span></div>
+          <div class="def">Volume que um processo ou sistema consegue processar e entregar em um determinado período.</div>
+        </article>
+        
+        <article class="card c9" data-cat="9" data-search="sistema de gestao de armazem wms warehouse management system sistema de gestao de armazem ou estoque controla entradas saidas e movimentacao de itens">
+          <div class="term"><span class="term-main">WMS (Warehouse Management System)</span><span class="term-slash">/</span><span class="term-pt">Sistema de gestão de armazém</span></div>
+          <div class="def">Sistema de gestão de armazém ou estoque — controla entradas, saídas e movimentação de itens.</div>
+        </article>
+        
+      </div>
+    </section>
+    
+</main>
+
+<div class="empty" id="emptyMsg">Nenhum resultado encontrado.</div>
+
+<footer>
+  <span>Glossário Business · Curadoria Renato Neves</span>
+  <span>Pressione <b style="color:var(--teal)">/</b> para buscar</span>
+</footer>
+
+<script>
+function GB_norm(s) {
+  s = String(s || '').toLowerCase();
+  try {
+    s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  } catch(e) {}
+  return s.replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function GB_selectedCat() {
+  var checked = document.querySelector('.cat-radio:checked');
+  return checked ? parseInt(checked.value, 10) || 0 : 0;
+}
+
+function GB_applySearch() {
+  var input = document.getElementById('searchInput');
+  var raw = input ? input.value : '';
+  var q = GB_norm(raw);
+  var selectedCat = GB_selectedCat();
+
+  var cards = document.querySelectorAll('#grid .card[data-cat]');
+  var sections = document.querySelectorAll('#grid .cat-section[data-section-cat]');
+  var visible = 0;
+
+  for (var i = 0; i < cards.length; i++) {
+    var card = cards[i];
+    var cat = parseInt(card.getAttribute('data-cat'), 10) || 0;
+    var text = card.getAttribute('data-search') || '';
+    var matchCat = selectedCat === 0 || cat === selectedCat;
+    var matchText = !q || text.indexOf(q) >= 0;
+    var showBySearch = matchText;
+
+    if (showBySearch) card.classList.remove('search-hidden');
+    else card.classList.add('search-hidden');
+
+    if (matchCat && matchText) visible++;
+  }
+
+  for (var s = 0; s < sections.length; s++) {
+    var sec = sections[s];
+    var secCat = parseInt(sec.getAttribute('data-section-cat'), 10) || 0;
+    var sectionCatVisible = selectedCat === 0 || secCat === selectedCat;
+    var anySearchVisible = false;
+    var secCards = sec.querySelectorAll('.card[data-cat]');
+    for (var c = 0; c < secCards.length; c++) {
+      if (!secCards[c].classList.contains('search-hidden')) {
+        anySearchVisible = true;
+        break;
+      }
+    }
+    if (sectionCatVisible && anySearchVisible) sec.classList.remove('search-empty');
+    else if (q) sec.classList.add('search-empty');
+    else sec.classList.remove('search-empty');
+  }
+
+  var vis = document.getElementById('visCount');
+  if (vis) vis.textContent = visible;
+
+  var info = document.getElementById('infoBar');
+  if (info) {
+    if (q) {
+      info.innerHTML = visible
+        ? '<b>' + visible + '</b> resultado' + (visible !== 1 ? 's' : '') + ' para "' + raw + '"'
+        : 'Nenhum resultado para "<b>' + raw + '</b>"';
+    } else if (selectedCat) {
+      info.innerHTML = '<b>' + visible + '</b> termos na categoria selecionada';
+    } else {
+      info.innerHTML = '';
+    }
+  }
+
+  var clear = document.getElementById('clearBtn');
+  if (clear) {
+    if (q) clear.classList.add('show');
+    else clear.classList.remove('show');
+  }
+
+  var empty = document.getElementById('emptyMsg');
+  if (empty) {
+    if (visible === 0) empty.classList.add('show');
+    else empty.classList.remove('show');
+  }
+}
+
+function GB_clearSearch() {
+  var input = document.getElementById('searchInput');
+  if (input) input.value = '';
+  GB_applySearch();
+  if (input) input.focus();
+}
+
+(function() {
+  var radios = document.querySelectorAll('.cat-radio');
+  for (var i = 0; i < radios.length; i++) {
+    radios[i].addEventListener('change', GB_applySearch, false);
+  }
+
+  var input = document.getElementById('searchInput');
+  if (input) {
+    input.addEventListener('input', GB_applySearch, false);
+    input.addEventListener('keyup', GB_applySearch, false);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === '/' && document.activeElement !== input) {
+      e.preventDefault();
+      if (input) input.focus();
+    }
+    if (e.key === 'Escape' && input) input.blur();
+  });
+
+  GB_applySearch();
+})();
+</script>
+</body>
+</html>
