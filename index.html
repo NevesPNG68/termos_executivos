@@ -521,11 +521,11 @@ footer {
     <div class="author-badge">por <strong>Renato Neves</strong></div>
   </div>
   <div class="stats-row">
-    <div class="stat"><span class="stat-num">203</span><span class="stat-label">termos</span></div>
+    <div class="stat"><span class="stat-num">204</span><span class="stat-label">termos</span></div>
     <div class="stat-sep"></div>
     <div class="stat"><span class="stat-num">9</span><span class="stat-label">categorias</span></div>
     <div class="stat-sep"></div>
-    <div class="stat"><span class="stat-num" id="visCount">203</span><span class="stat-label">visíveis</span></div>
+    <div class="stat"><span class="stat-num" id="visCount">204</span><span class="stat-label">visíveis</span></div>
   </div>
 </header>
 
@@ -1397,7 +1397,7 @@ footer {
       <div class="cat-heading">
         <div class="cat-dot c7"></div>
         <span class="cat-title">Finanças, Investimentos e Performance</span>
-        <span class="cat-count">21</span>
+        <span class="cat-count">22</span>
         <div class="cat-rule c7"></div>
       </div>
       <div class="cards-row">
@@ -1446,6 +1446,11 @@ footer {
           <div class="term"><span class="term-main">EBITDA</span><span class="term-slash">/</span><span class="term-pt">Resultado operacional ajustado</span></div>
           <div class="def">Resultado operacional antes de juros, impostos, depreciação e amortização — mede a eficiência operacional pura.</div>
         </article>
+        <article class="card c7" data-cat="7" data-search="equity participacao societaria participação societária capital social participacao acionaria participação acionária quotas cotas acoes ações ownership sociedade investimento investidores patrimonio patrimônio">
+          <div class="term"><span class="term-main">Equity</span><span class="term-slash">/</span><span class="term-pt">Participação societária</span></div>
+          <div class="def">Participação no capital de uma empresa. Representa propriedade, quotas, ações ou direito econômico sobre o negócio.</div>
+        </article>
+
         
         <article class="card c7" data-cat="7" data-search="previsao forecast previsao de resultados futuros baseada em dados historicos tendencias e premissas do negocio">
           <div class="term"><span class="term-main">Forecast</span><span class="term-slash">/</span><span class="term-pt">Previsão</span></div>
@@ -1683,118 +1688,144 @@ footer {
   <span>Pressione <b style="color:var(--teal)">/</b> para buscar</span>
 </footer>
 
+
 <script>
-function GB_norm(s) {
-  s = String(s || '').toLowerCase();
-  try {
-    s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  } catch(e) {}
-  return s.replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
-}
-
-function GB_selectedCat() {
-  var checked = document.querySelector('.cat-radio:checked');
-  return checked ? parseInt(checked.value, 10) || 0 : 0;
-}
-
-function GB_applySearch() {
-  var input = document.getElementById('searchInput');
-  var raw = input ? input.value : '';
-  var q = GB_norm(raw);
-  var selectedCat = GB_selectedCat();
-
-  var cards = document.querySelectorAll('#grid .card[data-cat]');
-  var sections = document.querySelectorAll('#grid .cat-section[data-section-cat]');
-  var visible = 0;
-
-  for (var i = 0; i < cards.length; i++) {
-    var card = cards[i];
-    var cat = parseInt(card.getAttribute('data-cat'), 10) || 0;
-    var text = card.getAttribute('data-search') || '';
-    var matchCat = selectedCat === 0 || cat === selectedCat;
-    var matchText = !q || text.indexOf(q) >= 0;
-    var showBySearch = matchText;
-
-    if (showBySearch) card.classList.remove('search-hidden');
-    else card.classList.add('search-hidden');
-
-    if (matchCat && matchText) visible++;
+(function () {
+  function norm(value) {
+    value = String(value || "").toLowerCase();
+    try {
+      value = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    } catch (e) {}
+    return value.replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
   }
 
-  for (var s = 0; s < sections.length; s++) {
-    var sec = sections[s];
-    var secCat = parseInt(sec.getAttribute('data-section-cat'), 10) || 0;
-    var sectionCatVisible = selectedCat === 0 || secCat === selectedCat;
-    var anySearchVisible = false;
-    var secCards = sec.querySelectorAll('.card[data-cat]');
-    for (var c = 0; c < secCards.length; c++) {
-      if (!secCards[c].classList.contains('search-hidden')) {
-        anySearchVisible = true;
-        break;
+  function getSelectedCat() {
+    var checked = document.querySelector("input.cat-radio:checked");
+    return checked ? String(checked.value || "0") : "0";
+  }
+
+  function forceAllWhenTyping(query) {
+    if (!query) return;
+    var all = document.getElementById("cat-all");
+    if (all && !all.checked) all.checked = true;
+  }
+
+  window.GB_applySearch = function () {
+    var input = document.getElementById("searchInput");
+    var raw = input ? input.value : "";
+    var query = norm(raw);
+
+    forceAllWhenTyping(query);
+
+    var selectedCat = getSelectedCat();
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".card[data-cat]"));
+    var sections = Array.prototype.slice.call(document.querySelectorAll(".cat-section[data-section-cat]"));
+    var visible = 0;
+
+    cards.forEach(function (card) {
+      var cardCat = String(card.getAttribute("data-cat") || "0");
+      var visibleText = card.innerText || card.textContent || "";
+      var searchText = norm((card.getAttribute("data-search") || "") + " " + visibleText);
+
+      var catOK = selectedCat === "0" || selectedCat === cardCat;
+      var textOK = !query || searchText.indexOf(query) !== -1;
+      var show = catOK && textOK;
+
+      card.style.display = show ? "" : "none";
+      if (show) {
+        card.classList.remove("search-hidden");
+        visible++;
+      } else {
+        card.classList.add("search-hidden");
+      }
+    });
+
+    sections.forEach(function (section) {
+      var sectionCat = String(section.getAttribute("data-section-cat") || "0");
+      var catOK = selectedCat === "0" || selectedCat === sectionCat;
+      var sectionCards = Array.prototype.slice.call(section.querySelectorAll(".card[data-cat]"));
+      var hasVisible = sectionCards.some(function (card) {
+        return card.style.display !== "none";
+      });
+
+      section.style.display = catOK && hasVisible ? "" : "none";
+      if (catOK && hasVisible) section.classList.remove("search-empty");
+      else section.classList.add("search-empty");
+    });
+
+    var visCount = document.getElementById("visCount");
+    if (visCount) visCount.textContent = String(visible);
+
+    var clearBtn = document.getElementById("clearBtn");
+    if (clearBtn) {
+      if (query) clearBtn.classList.add("show");
+      else clearBtn.classList.remove("show");
+    }
+
+    var info = document.getElementById("infoBar");
+    if (info) {
+      if (query) {
+        info.innerHTML = visible
+          ? "<b>" + visible + "</b> resultado" + (visible !== 1 ? "s" : "") + " para \"" + raw + "\""
+          : "Nenhum resultado para <b>\"" + raw + "\"</b>";
+      } else if (selectedCat !== "0") {
+        info.innerHTML = "<b>" + visible + "</b> termos na categoria selecionada";
+      } else {
+        info.innerHTML = "";
       }
     }
-    if (sectionCatVisible && anySearchVisible) sec.classList.remove('search-empty');
-    else if (q) sec.classList.add('search-empty');
-    else sec.classList.remove('search-empty');
-  }
+  };
 
-  var vis = document.getElementById('visCount');
-  if (vis) vis.textContent = visible;
+  window.GB_clearSearch = function () {
+    var input = document.getElementById("searchInput");
+    if (input) input.value = "";
+    window.GB_applySearch();
+    if (input) input.focus();
+  };
 
-  var info = document.getElementById('infoBar');
-  if (info) {
-    if (q) {
-      info.innerHTML = visible
-        ? '<b>' + visible + '</b> resultado' + (visible !== 1 ? 's' : '') + ' para "' + raw + '"'
-        : 'Nenhum resultado para "<b>' + raw + '</b>"';
-    } else if (selectedCat) {
-      info.innerHTML = '<b>' + visible + '</b> termos na categoria selecionada';
-    } else {
-      info.innerHTML = '';
+  function bindSearch() {
+    var input = document.getElementById("searchInput");
+
+    if (input) {
+      input.oninput = window.GB_applySearch;
+      input.onkeyup = window.GB_applySearch;
+      input.onchange = window.GB_applySearch;
+      input.addEventListener("input", window.GB_applySearch, false);
+      input.addEventListener("keyup", window.GB_applySearch, false);
+      input.addEventListener("change", window.GB_applySearch, false);
+      input.addEventListener("search", window.GB_applySearch, false);
     }
+
+    var radios = Array.prototype.slice.call(document.querySelectorAll("input.cat-radio"));
+    radios.forEach(function (radio) {
+      radio.onchange = window.GB_applySearch;
+      radio.onclick = window.GB_applySearch;
+      radio.addEventListener("change", window.GB_applySearch, false);
+      radio.addEventListener("click", window.GB_applySearch, false);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "/" && document.activeElement !== input) {
+        e.preventDefault();
+        if (input) input.focus();
+      }
+      if (e.key === "Escape" && input) {
+        input.value = "";
+        window.GB_applySearch();
+        input.blur();
+      }
+    });
+
+    window.GB_applySearch();
   }
 
-  var clear = document.getElementById('clearBtn');
-  if (clear) {
-    if (q) clear.classList.add('show');
-    else clear.classList.remove('show');
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindSearch);
+  } else {
+    bindSearch();
   }
 
-  var empty = document.getElementById('emptyMsg');
-  if (empty) {
-    if (visible === 0) empty.classList.add('show');
-    else empty.classList.remove('show');
-  }
-}
-
-function GB_clearSearch() {
-  var input = document.getElementById('searchInput');
-  if (input) input.value = '';
-  GB_applySearch();
-  if (input) input.focus();
-}
-
-(function() {
-  var radios = document.querySelectorAll('.cat-radio');
-  for (var i = 0; i < radios.length; i++) {
-    radios[i].addEventListener('change', GB_applySearch, false);
-  }
-
-  var input = document.getElementById('searchInput');
-  if (input) {
-    input.addEventListener('input', GB_applySearch, false);
-    input.addEventListener('keyup', GB_applySearch, false);
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === '/' && document.activeElement !== input) {
-      e.preventDefault();
-      if (input) input.focus();
-    }
-    if (e.key === 'Escape' && input) input.blur();
-  });
-
-  GB_applySearch();
+  window.addEventListener("load", window.GB_applySearch, false);
 })();
 </script>
 </body>
